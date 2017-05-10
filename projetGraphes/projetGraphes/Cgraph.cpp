@@ -23,7 +23,7 @@ Cgraph::Cgraph(const Cgraph & GRAObjet)
 	uiGRAnbrSommets = GRAObjet.uiGRAnbrSommets;
 	
 	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
-		ppSOMGRAListSommets[uiCompteur] = GRAObjet.ppSOMGRAListSommets[uiCompteur];
+		ppSOMGRAListSommets[uiCompteur] = new Csommet(*GRAObjet.ppSOMGRAListSommets[uiCompteur]);
 }
 
 Cgraph::Cgraph(Csommet *** pppSOMListSommets, unsigned int uiNbrSommets)
@@ -36,7 +36,7 @@ Cgraph::Cgraph(Csommet *** pppSOMListSommets, unsigned int uiNbrSommets)
 	uiGRAnbrSommets = uiNbrSommets;
 	
 	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
-		ppSOMGRAListSommets[uiCompteur] = (*pppSOMListSommets)[uiCompteur];
+		ppSOMGRAListSommets[uiCompteur] = new Csommet(*(*(pppSOMListSommets)[uiCompteur]));
 }
 
 Cgraph::~Cgraph()
@@ -58,7 +58,7 @@ void Cgraph::GRAajouterSommet(Csommet * pSOMSommet)
 	if(ppSOMGRAListSommets == nullptr)
 		throw Cexception(ERREUR_REALLOCATION);
 
-	ppSOMGRAListSommets[uiGRAnbrSommets - 1] = pSOMSommet;
+	ppSOMGRAListSommets[uiGRAnbrSommets - 1] = new Csommet(*pSOMSommet);
 }
 
 void Cgraph::GRAsupprimerSommet(unsigned int uiNumSommet)
@@ -116,9 +116,6 @@ void Cgraph::GRAajouterArc(unsigned int uiNumSommetDebut, unsigned int uiNumSomm
 	unsigned int uiCompteur;
 	bool bSommetDebutTrouvee = false, bSommetFinTrouvee = false;
 	
-	if(uiNumSommetDebut == uiNumSommetFin)
-		throw Cexception(ERREUR_PARAM, "Valeurs differentes attendues");
-
 	//On test si les sommets en paramètre existent
 	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
 	{
@@ -198,7 +195,16 @@ void Cgraph::GRAvider()
 
 	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
 		delete ppSOMGRAListSommets[uiCompteur];
-	free(ppSOMGRAListSommets);
+	uiGRAnbrSommets = 0;
+	ppSOMGRAListSommets = (Csommet **)realloc(ppSOMGRAListSommets, uiGRAnbrSommets);
+}
+
+void Cgraph::GRAinverser()
+{
+	unsigned int uiCompteur;
+
+	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
+		ppSOMGRAListSommets[uiCompteur]->SOMinverserArcs();
 }
 
 Cgraph & Cgraph::operator=(Cgraph const & GRAObjet)
@@ -212,7 +218,7 @@ Cgraph & Cgraph::operator=(Cgraph const & GRAObjet)
 	uiGRAnbrSommets = GRAObjet.uiGRAnbrSommets;
 	
 	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
-		ppSOMGRAListSommets[uiCompteur] = GRAObjet.ppSOMGRAListSommets[uiCompteur];
+		ppSOMGRAListSommets[uiCompteur] = new Csommet(*GRAObjet.ppSOMGRAListSommets[uiCompteur]);
 
 	return *this;
 }

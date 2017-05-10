@@ -153,6 +153,10 @@ class Csommet
 			Entraine : La bonne liste d'arcs est renvoyée
 		******************************************************************************/
 		Carc ** SOMLireArcs(bool bEntrant);
+
+		void SOMinverserArcs();
+
+		Csommet & Csommet::operator=(Csommet const & SOMObjet);
 };
 
 #endif

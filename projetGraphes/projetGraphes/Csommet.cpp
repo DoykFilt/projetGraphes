@@ -70,12 +70,12 @@ Csommet::Csommet(const Csommet & SOMObjet)
 
 	for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcEntrant; uiCompteurArc++)
 	{
-		ppARCSOMArcEntrant[uiCompteurArc] =  SOMObjet.ppARCSOMArcEntrant[uiCompteurArc];
+		ppARCSOMArcEntrant[uiCompteurArc] =  new Carc(*SOMObjet.ppARCSOMArcEntrant[uiCompteurArc]);
 	}
 
 	for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcSortant; uiCompteurArc++)
 	{
-		ppARCSOMArcSortant[uiCompteurArc] =  SOMObjet.ppARCSOMArcSortant[uiCompteurArc];
+		ppARCSOMArcSortant[uiCompteurArc] =  new Carc(*SOMObjet.ppARCSOMArcSortant[uiCompteurArc]);
 	}
 }
 
@@ -300,4 +300,47 @@ Carc ** Csommet::SOMLireArcs(bool bEntrant)
 	if(bEntrant)
 		return ppARCSOMArcEntrant;
 	else return ppARCSOMArcSortant;
+}
+
+void Csommet::SOMinverserArcs()
+{
+	Carc ** ARCtemp;
+	unsigned int uiTemp;
+
+	uiTemp = uiSOMNbArcEntrant;
+	uiSOMNbArcEntrant = uiSOMNbArcSortant;
+	uiSOMNbArcSortant = uiTemp;
+
+	ARCtemp = ppARCSOMArcEntrant;
+	ppARCSOMArcEntrant = ppARCSOMArcSortant;
+	ppARCSOMArcSortant = ARCtemp;
+}
+
+Csommet & Csommet::operator=(Csommet const & SOMObjet)
+{
+	unsigned int uiCompteurArc;
+
+	for(uiCompteurArc = 0; uiCompteurArc < uiSOMNbArcEntrant; uiCompteurArc++)
+		delete ppARCSOMArcEntrant[uiCompteurArc];
+	for(uiCompteurArc = 0; uiCompteurArc < uiSOMNbArcSortant; uiCompteurArc++)
+		delete ppARCSOMArcSortant[uiCompteurArc];
+
+	uiSOMNumSommet=SOMObjet.uiSOMNumSommet;
+	uiSOMNbArcEntrant=SOMObjet.uiSOMNbArcEntrant;
+	uiSOMNbArcSortant=SOMObjet.uiSOMNbArcSortant;
+
+	ppARCSOMArcEntrant=(Carc**)realloc(ppARCSOMArcEntrant, uiSOMNbArcEntrant*sizeof(Carc*));
+	if(ppARCSOMArcSortant==nullptr)
+		throw Cexception(ERREUR_REALLOCATION);
+	ppARCSOMArcSortant=(Carc**)realloc(ppARCSOMArcSortant, uiSOMNbArcSortant*sizeof(Carc*));
+	if(ppARCSOMArcSortant==nullptr)
+		throw Cexception(ERREUR_REALLOCATION);
+
+	for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcEntrant; uiCompteurArc++)
+		ppARCSOMArcEntrant[uiCompteurArc] =  new Carc(*SOMObjet.ppARCSOMArcEntrant[uiCompteurArc]);
+
+	for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcSortant; uiCompteurArc++)
+		ppARCSOMArcSortant[uiCompteurArc] =  new Carc(*SOMObjet.ppARCSOMArcSortant[uiCompteurArc]);
+	
+	return *this;
 }

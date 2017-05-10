@@ -7,11 +7,12 @@
 
 using namespace std;
 
-void main()
+void main(int argc, char * argv[])
 {
-	Cparseur * PARparseur;
-	CgraphGenerateur * GRGgenerateur;
-	Cgraph * GRAgraph;
+	Cparseur * PARparseur = nullptr;
+	CgraphGenerateur * GRGgenerateur = nullptr;
+	Cgraph * GRAgraph = nullptr;
+	Cgraph * GRAgraphInverse = nullptr;
 
 	char ** ppcBalises;
 	unsigned int uiNbrBalises;
@@ -24,6 +25,11 @@ void main()
 	ppcBalises[3] = _strdup("NBARCS");
 
 	try{
+		
+		//Si il n'y a aucun fichier en paramètre on s'arrête là
+		if(argc <= 1)
+			throw(Cexception(0, "Pas de parametres"));
+
 		cout << "Lecture du graph" << endl;
 		PARparseur = new Cparseur(ppcBalises, uiNbrBalises);
 		PARparseur->PARLire("graph.txt");
@@ -36,6 +42,11 @@ void main()
 
 		cout << "Affichage du graph" << endl;
 		GRAgraph->GRAafficherGraph();
+
+		cout << "Inversion du graph" << endl;
+		GRAgraphInverse = new Cgraph(*GRAgraph);
+		GRAgraphInverse->GRAinverser();
+		GRAgraphInverse->GRAafficherGraph();
 	}
 	catch(Cexception EXCexception)
 	{
@@ -43,6 +54,10 @@ void main()
 		cout << " " << EXCexception.EXCLire_Message() << endl;
 	}
 
+	delete GRGgenerateur;
+	delete GRAgraph;
+	delete GRAgraphInverse;
+	delete PARparseur;
 
 	this_thread::sleep_for(chrono::seconds(5));
 }
