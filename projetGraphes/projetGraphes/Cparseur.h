@@ -29,8 +29,8 @@ class Cparseur
 {
 private :
 	unsigned int uiPARNbrBalises;
-	char ** pcPARBalises;
-	char *** pcPARtabBalisesValeurs;
+	char ** ppcPARBalises;
+	char *** pppcPARtabBalisesValeurs;
 
 public :
 	//Constructeurs et destructeurs
@@ -38,8 +38,12 @@ public :
 	Cparseur(Cparseur & PARObjet);
 	~Cparseur();
 
+	//Renvoit les données brutes lues
+	char *** PARbrut(){ return pppcPARtabBalisesValeurs; }
+	char * PARvaleurSuivante(char * pcBalise, char * pcChaine);
 	//Permet de récolter les données d'un fichier et de les stocker sous un format brut
 	void PARLire(char * pcfilename);
+	unsigned int PARLireNbrBalise() { return uiPARNbrBalises; }
 
 	//Surcharges d'opérateurs
 	Cparseur & operator=(Cparseur const & PARparseur);
@@ -48,7 +52,6 @@ private :
 	//Méthodes utilisé en interne pour le parsage
 	char * PARreconnaitreBalise(char * pcSource);
 	void PARstockerValeur(char * pcBalise, char * pcValeur);
-	char * PARvaleurSuivante(char * pcBalise, char * pcChaine);
 };
 
 #endif

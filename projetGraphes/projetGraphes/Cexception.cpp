@@ -46,6 +46,9 @@ Cexception::Cexception(unsigned int uiValeur, char * pcMessageDetail)
 		case ERREUR_PARSEUR :
 			pcEXCMessage = _strdup(MESSAGE_PARSEUR);
 			break;
+		case ERREUR_PRECONDITIONS :
+			pcEXCMessage = _strdup(MESSAGE_PRECONDITIONS);
+			break;
 		default : 
 			pcEXCMessage = _strdup(MESSAGE_DEFAUT);
 	}
@@ -125,6 +128,9 @@ void Cexception::EXCModifier_Valeur(unsigned int uiValeur, bool reinitSuppMessag
 		case ERREUR_PARSEUR :
 			pcEXCMessage = _strdup(MESSAGE_PARSEUR);
 			break;
+		case ERREUR_PRECONDITIONS :
+			pcEXCMessage = _strdup(MESSAGE_PRECONDITIONS);
+			break;
 		default : 
 			pcEXCMessage = _strdup(MESSAGE_DEFAUT);
 	}
@@ -146,10 +152,18 @@ Entraine : Retourne le message entier
 ******************************************************************************/
 char * Cexception::EXCLire_Message() const
 {
-	size_t TailleMessage = strlen(pcEXCMessage) + strlen(pcEXCMessageDetail) + 2;
-	char* pcMessageComplet = _strdup( pcEXCMessage);
-	strcat_s(pcMessageComplet, strlen(pcMessageComplet) + 2, " ");
-	strcat_s(pcMessageComplet, TailleMessage, pcEXCMessageDetail); // Concaténation des deux messages
+	size_t stTailleMessage = strlen(pcEXCMessage) + strlen(pcEXCMessageDetail) + 1;
+	char* pcMessageComplet = new char[stTailleMessage + 1];
+	unsigned int uiCompteurMessage, uiCompteurDetail;
+
+	for(uiCompteurMessage = 0; uiCompteurMessage < strlen(pcEXCMessage); uiCompteurMessage++)
+		pcMessageComplet[uiCompteurMessage] = pcEXCMessage[uiCompteurMessage];
+	pcMessageComplet[uiCompteurMessage] = ' ';
+	
+	for(uiCompteurDetail = 0; uiCompteurDetail < strlen(pcEXCMessage); uiCompteurDetail++)
+		pcMessageComplet[uiCompteurMessage + uiCompteurDetail] = pcEXCMessageDetail[uiCompteurDetail];
+	pcMessageComplet[uiCompteurMessage] = '\0';
+
 	return pcMessageComplet;
 } 
 

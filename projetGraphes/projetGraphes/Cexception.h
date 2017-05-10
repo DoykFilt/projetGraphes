@@ -1,7 +1,6 @@
-#ifndef CEXCEPTION
-#define CEXCEPTION
+#ifndef CEXCEPTION_H
+#define CEXCEPTION_H
 
-//#include <string>
 #include <string.h>
 #include <stdlib.h>
 using namespace std;
@@ -21,6 +20,8 @@ using namespace std;
 #define MESSAGE_FICHIER "Echec de l'ouverture du fichier"
 #define ERREUR_PARSEUR 6
 #define MESSAGE_PARSEUR "Echec lors du parsage"
+#define ERREUR_PRECONDITIONS 7
+#define MESSAGE_PRECONDITIONS "Impossible d'utiliser la methode/fonction"
 
 class Cexception
 {
