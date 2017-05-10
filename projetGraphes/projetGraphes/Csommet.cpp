@@ -17,10 +17,10 @@ Csommet::Csommet()
 	uiSOMNumSommet = 0;
 	ppARCSOMArcEntrant=(Carc**)malloc(uiSOMNbArcEntrant*sizeof(Carc*));
 	if(ppARCSOMArcEntrant==nullptr)
-		throw Cexception(ERREUR_ALLOCATION);
+		throw Cexception(ERREUR_ALLOCATION, "Constructeur Csommet");
 	ppARCSOMArcSortant=(Carc**)malloc(uiSOMNbArcSortant*sizeof(Carc*));
 	if(ppARCSOMArcSortant==nullptr)
-		throw Cexception(ERREUR_ALLOCATION);
+		throw Cexception(ERREUR_ALLOCATION, "Constructeur Csommet");
 
 }
 
@@ -39,10 +39,10 @@ Csommet::Csommet(unsigned int uiNumSommet)
 	uiSOMNbArcSortant=0;
 	ppARCSOMArcEntrant=(Carc**)malloc(uiSOMNbArcEntrant*sizeof(Carc*));
 	if(ppARCSOMArcEntrant==nullptr)
-		throw Cexception(ERREUR_ALLOCATION);
+		throw Cexception(ERREUR_ALLOCATION, "Constructeur 2 Csommet");
 	ppARCSOMArcSortant=(Carc**)malloc(uiSOMNbArcSortant*sizeof(Carc*));
 	if(ppARCSOMArcSortant==nullptr)
-		throw Cexception(ERREUR_ALLOCATION);
+		throw Cexception(ERREUR_ALLOCATION, "Constructeur 2 Csommet");
 
 }
 		
@@ -62,11 +62,11 @@ Csommet::Csommet(const Csommet & SOMObjet)
 	uiSOMNbArcEntrant=SOMObjet.uiSOMNbArcEntrant;
 	uiSOMNbArcSortant=SOMObjet.uiSOMNbArcSortant;
 	ppARCSOMArcEntrant=(Carc**)malloc(uiSOMNbArcEntrant*sizeof(Carc*));
-	if(ppARCSOMArcSortant==nullptr)
-		throw Cexception(ERREUR_ALLOCATION);
+	if(ppARCSOMArcEntrant==nullptr)
+		throw Cexception(ERREUR_ALLOCATION, "1 Constructeur de recopie Csommet");
 	ppARCSOMArcSortant=(Carc**)malloc(uiSOMNbArcSortant*sizeof(Carc*));
 	if(ppARCSOMArcSortant==nullptr)
-		throw Cexception(ERREUR_ALLOCATION);
+		throw Cexception(ERREUR_ALLOCATION, "2 Constructeur de recopie Csommet");
 
 	for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcEntrant; uiCompteurArc++)
 	{

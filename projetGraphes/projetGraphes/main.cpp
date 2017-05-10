@@ -27,12 +27,12 @@ void main(int argc, char * argv[])
 	try{
 		
 		//Si il n'y a aucun fichier en paramètre on s'arrête là
-		//if(argc <= 1)
-			//throw(Cexception(0, "Pas de parametres"));
+		if(argc <= 1)
+			throw(Cexception(0, "Pas de parametres"));
 
 		cout << "Lecture du graphe" << endl;
 		PARparseur = new Cparseur(ppcBalises, uiNbrBalises);
-		PARparseur->PARLire("graph.txt");
+		PARparseur->PARLire(argv[1]);
 		cout << "graphe lu" << endl;
 
 		cout << "Creation du graphe" << endl;

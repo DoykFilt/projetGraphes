@@ -9,7 +9,7 @@ Cgraph::Cgraph()
 {
 	ppSOMGRAListSommets = (Csommet **)malloc(0);
 	if(ppSOMGRAListSommets == nullptr)
-		throw Cexception(ERREUR_ALLOCATION);
+		throw Cexception(ERREUR_ALLOCATION, "Constructeur par defaut Cgraph");
 	uiGRAnbrSommets = 0;
 }
 
@@ -17,9 +17,9 @@ Cgraph::Cgraph(const Cgraph & GRAObjet)
 {
 	unsigned int uiCompteur;
 
-	ppSOMGRAListSommets = (Csommet **)malloc(GRAObjet.uiGRAnbrSommets * sizeof(Csommet));
+	ppSOMGRAListSommets = (Csommet **)malloc(GRAObjet.uiGRAnbrSommets * sizeof(Csommet *));
 	if(ppSOMGRAListSommets == nullptr)
-		throw Cexception(ERREUR_ALLOCATION);
+		throw Cexception(ERREUR_ALLOCATION, "Constructeur de recopie Cgraph");
 	uiGRAnbrSommets = GRAObjet.uiGRAnbrSommets;
 	
 	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
@@ -30,9 +30,9 @@ Cgraph::Cgraph(Csommet *** pppSOMListSommets, unsigned int uiNbrSommets)
 {
 	unsigned int uiCompteur;
 
-	ppSOMGRAListSommets = (Csommet **)malloc(uiNbrSommets * sizeof(Csommet));
+	ppSOMGRAListSommets = (Csommet **)malloc(uiNbrSommets * sizeof(Csommet *));
 	if(ppSOMGRAListSommets == nullptr)
-		throw Cexception(ERREUR_ALLOCATION);
+		throw Cexception(ERREUR_ALLOCATION, "Constructeur a deux arguments Cgraph");
 	uiGRAnbrSommets = uiNbrSommets;
 	
 	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
@@ -51,7 +51,7 @@ void Cgraph::GRAajouterSommet(Csommet * pSOMSommet)
 
 	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
 		if(ppSOMGRAListSommets[uiCompteur]->SOMLireNumSommet() == pSOMSommet->SOMLireNumSommet())
-			throw Cexception(ERREUR_PARAM, "Sommet deja present dans le graph");
+			throw Cexception(ERREUR_PARAM, "Sommet deja present dans le graph Cgraph");
 	
 	uiGRAnbrSommets++;
 	ppSOMGRAListSommets = (Csommet **)realloc(ppSOMGRAListSommets, uiGRAnbrSommets * sizeof(Csommet *));

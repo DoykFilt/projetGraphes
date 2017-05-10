@@ -118,7 +118,7 @@ void Cparseur::PARLire(char* pcfilename)
 	char cLecture;
 	char * pcTemp = (char *)malloc(sizeof(char));
 	if(pcTemp == nullptr)
-		throw Cexception(ERREUR_ALLOCATION);
+		throw Cexception(ERREUR_ALLOCATION, "Dans PARLire");
 	pcTemp[0] = '\0';
 	char * pcBaliseActuelle;
 	bool bLectureBalise = true, bLectureValeur = false, bLectureMultiple = false;
@@ -324,7 +324,7 @@ char * Cparseur::PARvaleurSuivante(char * pcBalise, char * pcChaine)
 	uiCompteur = 0;
 	pcRetour = (char *)malloc(uiCompteur + 1);
 	if(pcRetour == nullptr)
-		throw Cexception(ERREUR_ALLOCATION);
+		throw Cexception(ERREUR_ALLOCATION, "Dans PARValeurSuivante");
 	pcRetour[uiCompteur] = '\0';
 	
 	while(*pcTemp != ' ' && *pcTemp != '\n')
