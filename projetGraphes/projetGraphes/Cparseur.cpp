@@ -9,8 +9,8 @@ using namespace std;
 /******************************************************************************
 Constructeur
 *******************************************************************************
-Entrée : Rien
-Necessité : Néant
+Entrée : char ** tableau contenant les noms de balise, unsigned int le nombre de balise
+Necessité : uiNbrBalises correspond au nombre de balises dans pcBalises
 Sortie : Rien
 Entraine : L'objet a été initialisé
 ******************************************************************************/
@@ -109,9 +109,9 @@ Cparseur & Cparseur::operator=(Cparseur const & PARparseur)
 PARLire (inspiré par les méthodes de compilation)
 *******************************************************************************
 Entrée : pcfilename le chemin d'accès au fichier (chaîne de caractère)
-Necessité : Le fichier existe
+Necessité : Le fichier existe et les données dont au bon format dans le fichier
 Sortie : Rien
-Entraine : la matrice est lue sous format brut
+Entraine : les données sont lues et stockées sous format brut
 ******************************************************************************/
 void Cparseur::PARLire(char* pcfilename)
 {
@@ -154,7 +154,7 @@ void Cparseur::PARLire(char* pcfilename)
 			if(bLectureMultiple)
 			{	
 				uiCptrTemp++;
-				pcTemp = (char *)realloc(pcTemp, uiCptrTemp * sizeof(char));
+				pcTemp = (char *)realloc(pcTemp, (uiCptrTemp + 1) * sizeof(char));
 				if(pcTemp == nullptr)
 					throw Cexception(ERREUR_REALLOCATION);
 				pcTemp[uiCptrTemp - 1] = cLecture;
@@ -181,7 +181,7 @@ void Cparseur::PARLire(char* pcfilename)
 				if(*pcTemp != '\0')
 				{
 					uiCptrTemp++;
-					pcTemp = (char *)realloc(pcTemp, uiCptrTemp * sizeof(char));
+					pcTemp = (char *)realloc(pcTemp, (uiCptrTemp + 1) * sizeof(char));
 					if(pcTemp == nullptr)
 						throw Cexception(ERREUR_REALLOCATION);
 					pcTemp[uiCptrTemp - 1] = ' ';
@@ -215,7 +215,7 @@ void Cparseur::PARLire(char* pcfilename)
 			if(!bLectureBalise)
 				bLectureValeur = true;
 			uiCptrTemp++;
-			pcTemp = (char *)realloc(pcTemp, uiCptrTemp * sizeof(char));
+			pcTemp = (char *)realloc(pcTemp, (uiCptrTemp + 1) * sizeof(char));
 			if(pcTemp == nullptr)
 				throw Cexception(ERREUR_REALLOCATION);
 			pcTemp[uiCptrTemp - 1] = cLecture;
@@ -225,7 +225,7 @@ void Cparseur::PARLire(char* pcfilename)
 	}
 	
 	//Finalement test si tout a bien été récupéré
-	for(uiCompteur = 0; uiCompteur < PARNBRBALISES; uiCompteur++)
+	for(uiCompteur = 0; uiCompteur < uiPARNbrBalises; uiCompteur++)
 	{
 		if(pppcPARtabBalisesValeurs[uiCompteur][1] == nullptr)
 			throw Cexception(ERREUR_PARSEUR, "Fin du fichier, toutes les informations n'ont pas ete renseignees");
@@ -251,7 +251,7 @@ char * Cparseur::PARreconnaitreBalise(char * pcSource)
 	if(pcSource == nullptr)
 		throw Cexception(ERREUR_PARAM);
 
-	for(uiCptr = 0; uiCptr < PARNBRBALISES; uiCptr++)
+	for(uiCptr = 0; uiCptr < uiPARNbrBalises; uiCptr++)
 		if(strcmp(pppcPARtabBalisesValeurs[uiCptr][0],pcSource) == 0)
 			return pppcPARtabBalisesValeurs[uiCptr][0];
 
@@ -273,11 +273,19 @@ void Cparseur::PARstockerValeur(char * pcBalise, char * pcValeur)
 	if(pcBalise == nullptr || pcValeur == nullptr)
 		throw Cexception(ERREUR_PARAM);
 
-	for(uiCptr = 0; uiCptr < PARNBRBALISES; uiCptr++)
+	for(uiCptr = 0; uiCptr < uiPARNbrBalises; uiCptr++)
 		if(strcmp(pppcPARtabBalisesValeurs[uiCptr][0], pcBalise) == 0)
 			pppcPARtabBalisesValeurs[uiCptr][1] = _strdup(pcValeur);
 }
 
+/******************************************************************************
+PARvaleurSuivante
+*******************************************************************************
+Entrée : (2 chaînes de caractères)pcBalise et pcChaine
+Necessité : il y a une valeur associée à la balise dans la chaîne de caractère
+Sortie : une chaine de caractère, la valeur associée
+Entraine : la valeur est trouvée, renvoiée et éffacé de la chaîne de caractère
+******************************************************************************/
 char * Cparseur::PARvaleurSuivante(char * pcBalise, char * pcChaine)
 {
 	char * pcTemp;

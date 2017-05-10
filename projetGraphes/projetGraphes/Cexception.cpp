@@ -143,7 +143,7 @@ void Cexception::EXCModifier_Valeur(unsigned int uiValeur, bool reinitSuppMessag
 }
 
 /******************************************************************************
-Méthode de lecture du messahge
+Méthode de lecture du message
 *******************************************************************************
 Entrée : Rien
 Necessité : Néant
@@ -159,13 +159,16 @@ char * Cexception::EXCLire_Message() const
 	for(uiCompteurMessage = 0; uiCompteurMessage < strlen(pcEXCMessage); uiCompteurMessage++)
 		pcMessageComplet[uiCompteurMessage] = pcEXCMessage[uiCompteurMessage];
 
-	pcMessageComplet[uiCompteurMessage] = ' ';
-	uiCompteurMessage++;
-	pcMessageComplet[uiCompteurMessage] = '-';
-	uiCompteurMessage++;
-	pcMessageComplet[uiCompteurMessage] = ' ';
-	uiCompteurMessage++;
-	
+	if(strlen(pcEXCMessageDetail) > 0)
+	{
+		pcMessageComplet[uiCompteurMessage] = ' ';
+		uiCompteurMessage++;
+		pcMessageComplet[uiCompteurMessage] = '-';
+		uiCompteurMessage++;
+		pcMessageComplet[uiCompteurMessage] = ' ';
+		uiCompteurMessage++;
+	}
+
 	for(uiCompteurDetail = 0; uiCompteurDetail < strlen(pcEXCMessageDetail); uiCompteurDetail++)
 		pcMessageComplet[uiCompteurMessage + uiCompteurDetail] = pcEXCMessageDetail[uiCompteurDetail];
 	pcMessageComplet[uiCompteurMessage + uiCompteurDetail] = '\0';

@@ -27,23 +27,23 @@ void main(int argc, char * argv[])
 	try{
 		
 		//Si il n'y a aucun fichier en paramètre on s'arrête là
-		if(argc <= 1)
-			throw(Cexception(0, "Pas de parametres"));
+		//if(argc <= 1)
+			//throw(Cexception(0, "Pas de parametres"));
 
-		cout << "Lecture du graph" << endl;
+		cout << "Lecture du graphe" << endl;
 		PARparseur = new Cparseur(ppcBalises, uiNbrBalises);
 		PARparseur->PARLire("graph.txt");
-		cout << "graph lu" << endl;
+		cout << "graphe lu" << endl;
 
-		cout << "Creation du graph" << endl;
+		cout << "Creation du graphe" << endl;
 		GRGgenerateur = new CgraphGenerateur(PARparseur);
 		GRAgraph = GRGgenerateur->GRGgenererGraph();
 		cout << "graph cree" << endl;
 
-		cout << "Affichage du graph" << endl;
+		cout << "Affichage du graphe" << endl;
 		GRAgraph->GRAafficherGraph();
 
-		cout << "Inversion du graph" << endl;
+		cout << "Inversion du graphe" << endl;
 		GRAgraphInverse = new Cgraph(*GRAgraph);
 		GRAgraphInverse->GRAinverser();
 		GRAgraphInverse->GRAafficherGraph();

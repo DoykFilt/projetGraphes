@@ -23,7 +23,6 @@ CgraphGenerateur::~CgraphGenerateur(){}
 Cgraph * CgraphGenerateur::GRGgenererGraph()
 {
 	Cgraph * GRAgraph;
-	Csommet * SOMsommet;
 	unsigned int uiNbrSommets, uiNbrArcs;
 	unsigned int uiCompteurPrincipal, uiCompteurSecondaire;
 	char *** pppcBrut;

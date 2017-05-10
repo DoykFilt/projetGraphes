@@ -240,7 +240,7 @@ Méthode de suppression d'un arc
 ******************************************************************************/
 void Csommet::SOMSupprimerArc(unsigned int uiDestination, bool bEntrant) //précondition : arc existant
 {
-	unsigned int uiCompteurArc;
+	unsigned int uiCompteurArc = 0;
 
 	if(bEntrant==true)
 	{
