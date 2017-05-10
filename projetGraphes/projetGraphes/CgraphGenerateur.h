@@ -18,10 +18,10 @@ public :
 	~CgraphGenerateur();
 
 	//Methodes
-	Cgraph GRGgenererGraph();
+	Cgraph * GRGgenererGraph();
 	void GRGsetParseur(Cparseur * pPARparseur);
 	Cparseur * GRGgetParseur();
-	unsigned int PARreconnaitreEntier(char * pcElm);
+	unsigned int GRGreconnaitreEntier(char * pcElm);
 	
 	//Surcharge d'operateur
 	CgraphGenerateur & operator=(CgraphGenerateur const & GRGObjet);

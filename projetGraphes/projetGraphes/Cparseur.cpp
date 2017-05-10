@@ -120,7 +120,7 @@ void Cparseur::PARLire(char* pcfilename)
 	if(pcTemp == nullptr)
 		throw Cexception(ERREUR_ALLOCATION);
 	pcTemp[0] = '\0';
-	char * pcBaliseActuelle = _strdup("");
+	char * pcBaliseActuelle;
 	bool bLectureBalise = true, bLectureValeur = false, bLectureMultiple = false;
 	unsigned int uiCompteur, uiCptrTemp = 0;
 
@@ -234,7 +234,6 @@ void Cparseur::PARLire(char* pcfilename)
 	//Pour enfin fermer le fichier et libérer les variables intermédiaires
 	fichier.close();
 	free(pcTemp);
-	free(pcBaliseActuelle);
 }
 
 /******************************************************************************
@@ -283,12 +282,19 @@ char * Cparseur::PARvaleurSuivante(char * pcBalise, char * pcChaine)
 {
 	char * pcTemp;
 	char * pcRetour;
-	unsigned int uiCompteur = 0;
+	unsigned int uiCompteur;
 
 	if(pcBalise == nullptr || pcBalise == nullptr)
 		throw Cexception(ERREUR_PARAM);
 
+	//On met tout en majuscule
+	for(uiCompteur = 0; uiCompteur < strlen(pcChaine); uiCompteur++)
+		if(pcChaine[uiCompteur] >= 'a' && pcChaine[uiCompteur] <= 'z')
+			pcChaine[uiCompteur] = pcChaine[uiCompteur] - 'a' + 'A';
+
 	pcTemp = strstr(pcChaine, pcBalise);
+	if(pcTemp == nullptr)
+		throw Cexception(ERREUR_PARSEUR, "Balise non trouvee");
 
 	//On va jusqu'au égal en supprimant la balise
 	while(*pcTemp != '=')
@@ -307,6 +313,7 @@ char * Cparseur::PARvaleurSuivante(char * pcBalise, char * pcChaine)
 		pcTemp++;
 	}
 	//Puis on retire la valeur de la chaine pour la renvoyer
+	uiCompteur = 0;
 	pcRetour = (char *)malloc(uiCompteur + 1);
 	if(pcRetour == nullptr)
 		throw Cexception(ERREUR_ALLOCATION);

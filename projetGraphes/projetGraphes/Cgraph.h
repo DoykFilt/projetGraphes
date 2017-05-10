@@ -7,10 +7,12 @@
 
 class Cgraph
 {
+private :
 	//Attributs
 	Csommet ** ppSOMGRAListSommets;
 	unsigned int uiGRAnbrSommets;
 
+public :
 	//Constructeurs - Destructeur
 	Cgraph();
 	Cgraph(const Cgraph & GRAObjet);

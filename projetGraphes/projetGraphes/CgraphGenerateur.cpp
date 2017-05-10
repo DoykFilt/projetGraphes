@@ -20,44 +20,44 @@ CgraphGenerateur::CgraphGenerateur(const CgraphGenerateur & GRGObjet)
 
 CgraphGenerateur::~CgraphGenerateur(){}
 
-Cgraph CgraphGenerateur::GRGgenererGraph()
+Cgraph * CgraphGenerateur::GRGgenererGraph()
 {
 	Cgraph * GRAgraph;
 	Csommet * SOMsommet;
 	unsigned int uiNbrSommets, uiNbrArcs;
 	unsigned int uiCompteurPrincipal, uiCompteurSecondaire;
-	char *** brut;
+	char *** pppcBrut;
 
 	if(pPARGRGparseur == nullptr)
 		throw Cexception(ERREUR_PRECONDITIONS, "Parseur vide");
-	brut = pPARGRGparseur->PARbrut();
-	if(brut == nullptr)
+	pppcBrut = pPARGRGparseur->PARbrut();
+	if(pppcBrut == nullptr)
 		throw Cexception(ERREUR_PRECONDITIONS, "Parser le fichier avant");
 
 	GRAgraph = new Cgraph();
 
 	//On récupère le nombre de sommets et d'arcs
 	for(uiCompteurPrincipal = 0; uiCompteurPrincipal < pPARGRGparseur->PARLireNbrBalise(); uiCompteurPrincipal++)
-		if(strcmp("NBRSOMMETS", pPARGRGparseur->PARbrut[uiCompteurPrincipal][0]) == 0)
-			uiNbrSommets = pPARGRGparseur->PARbrut[uiCompteurPrincipal][0];
-		else if(strcmp("NBRARCS", pPARGRGparseur->PARbrut[uiCompteurPrincipal][0]) == 0)
-			uiNbrArcs = pPARGRGparseur->PARbrut[uiCompteurPrincipal][0];
+		if(strcmp("NBSOMMETS", pppcBrut[uiCompteurPrincipal][0]) == 0)
+			uiNbrSommets = GRGreconnaitreEntier(pppcBrut[uiCompteurPrincipal][1]);
+		else if(strcmp("NBARCS", pppcBrut[uiCompteurPrincipal][0]) == 0)
+			uiNbrArcs = GRGreconnaitreEntier(pppcBrut[uiCompteurPrincipal][1]);
 	
 	//Puis les sommets
 	for(uiCompteurPrincipal = 0; uiCompteurPrincipal < pPARGRGparseur->PARLireNbrBalise(); uiCompteurPrincipal++)
-		if(strcmp("SOMMETS", pPARGRGparseur->PARbrut[uiCompteurPrincipal][0]) == 0)
+		if(strcmp("SOMMETS", pppcBrut[uiCompteurPrincipal][0]) == 0)
 			for(uiCompteurSecondaire = 0; uiCompteurSecondaire < uiNbrSommets; uiCompteurSecondaire++)
 			{
-				SOMsommet = new Csommet(pPARGRGparseur->PARvaleurSuivante("SOMMET", pPARGRGparseur->PARbrut[uiCompteurPrincipal][1]));
-				GRAgraph->GRAAjouterSommet(SOMsommet);
+				SOMsommet = new Csommet(GRGreconnaitreEntier(pPARGRGparseur->PARvaleurSuivante("NUMERO", pppcBrut[uiCompteurPrincipal][1])));
+				GRAgraph->GRAajouterSommet(SOMsommet);
 			}
 
 	//Et enfin les arcs
 	for(uiCompteurPrincipal = 0; uiCompteurPrincipal < pPARGRGparseur->PARLireNbrBalise(); uiCompteurPrincipal++)
-		if(strcmp("ARCS", pPARGRGparseur->PARbrut[uiCompteurPrincipal][0]) == 0)
+		if(strcmp("ARCS", pppcBrut[uiCompteurPrincipal][0]) == 0)
 			for(uiCompteurSecondaire = 0; uiCompteurSecondaire < uiNbrSommets; uiCompteurSecondaire++)
-				GRAgraph->GRAAjouterArc(pPARGRGparseur->PARvaleurSuivante("DEBUT", pPARGRGparseur->PARbrut[uiCompteurPrincipal][1]),
-										pPARGRGparseur->PARvaleurSuivante("FIN", pPARGRGparseur->PARbrut[uiCompteurPrincipal][1]));
+				GRAgraph->GRAajouterArc(GRGreconnaitreEntier(pPARGRGparseur->PARvaleurSuivante("DEBUT", pppcBrut[uiCompteurPrincipal][1])),
+										GRGreconnaitreEntier(pPARGRGparseur->PARvaleurSuivante("FIN", pppcBrut[uiCompteurPrincipal][1])));
 
 	return GRAgraph;
 }
@@ -80,7 +80,7 @@ Necessité : le paramètre est convertible en int
 Sortie : L'entier détecté
 Entraine : L'entier retourné est une taille valide
 ******************************************************************************/
-unsigned int CgraphGenerateur::PARreconnaitreEntier(char * pcElm)
+unsigned int CgraphGenerateur::GRGreconnaitreEntier(char * pcElm)
 {
 	long int liTemp;
 	//on utilise strtol au cas où l'utilisateur aurait rentré un long ou un double au lieu d'un int

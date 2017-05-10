@@ -10,18 +10,18 @@ Constructeur par défaut
 	Sortie : Rien
 	Entraine : L'objet en cours est initialisé.
 ******************************************************************************/
-        Csommet::Csommet()
-		{
-			uiSOMNbArcEntrant=0;
-			uiSOMNbArcSortant=0;
-			ppARCSOMArcEntrant=(Carc**)malloc(uiSOMNbArcEntrant*sizeof(Carc*));
-			if(ppARCSOMArcEntrant==nullptr)
-				throw Cexception(MESSAGE_ALLOCATION);
-			ppARCSOMArcSortant=(Carc**)malloc(uiSOMNbArcSortant*sizeof(Carc*));
-			if(ppARCSOMArcSortant==nullptr)
-				throw Cexception(MESSAGE_ALLOCATION);
+Csommet::Csommet()
+{
+	uiSOMNbArcEntrant=0;
+	uiSOMNbArcSortant=0;
+	ppARCSOMArcEntrant=(Carc**)malloc(uiSOMNbArcEntrant*sizeof(Carc*));
+	if(ppARCSOMArcEntrant==nullptr)
+		throw Cexception(ERREUR_ALLOCATION);
+	ppARCSOMArcSortant=(Carc**)malloc(uiSOMNbArcSortant*sizeof(Carc*));
+	if(ppARCSOMArcSortant==nullptr)
+		throw Cexception(ERREUR_ALLOCATION);
 
-		}
+}
 
 /******************************************************************************
 Constructeur à un argument
@@ -31,19 +31,19 @@ Constructeur à un argument
 	Sortie : Rien
 	Entraine : L'objet en cours est initialisé.
 ******************************************************************************/
-		Csommet::Csommet(unsigned int uiNumSommet)
-		{
-			uiSOMNumSommet=uiNumSommet;
-			uiSOMNbArcEntrant=0;
-			uiSOMNbArcSortant=0;
-			ppARCSOMArcEntrant=(Carc**)malloc(uiSOMNbArcEntrant*sizeof(Carc*));
-			if(ppARCSOMArcEntrant==nullptr)
-				throw Cexception(MESSAGE_ALLOCATION);
-			ppARCSOMArcSortant=(Carc**)malloc(uiSOMNbArcSortant*sizeof(Carc*));
-			if(ppARCSOMArcSortant==nullptr)
-				throw Cexception(MESSAGE_ALLOCATION);
+Csommet::Csommet(unsigned int uiNumSommet)
+{
+	uiSOMNumSommet=uiNumSommet;
+	uiSOMNbArcEntrant=0;
+	uiSOMNbArcSortant=0;
+	ppARCSOMArcEntrant=(Carc**)malloc(uiSOMNbArcEntrant*sizeof(Carc*));
+	if(ppARCSOMArcEntrant==nullptr)
+		throw Cexception(ERREUR_ALLOCATION);
+	ppARCSOMArcSortant=(Carc**)malloc(uiSOMNbArcSortant*sizeof(Carc*));
+	if(ppARCSOMArcSortant==nullptr)
+		throw Cexception(ERREUR_ALLOCATION);
 
-		}
+}
 		
 /******************************************************************************
 Constructeur de recopie
@@ -53,31 +53,31 @@ Constructeur de recopie
 	Sortie : Rien
 	Entraine : L'objet en cours est initialisé.
 ******************************************************************************/
-		Csommet::Csommet(const Csommet & SOMObjet)
-		{
-			uiSOMNumSommet=SOMObjet.uiSOMNumSommet;
-			uiSOMNbArcEntrant=SOMObjet.uiSOMNbArcEntrant;
-			uiSOMNbArcSortant=SOMObjet.uiSOMNbArcSortant;
-			ppARCSOMArcEntrant=(Carc**)malloc(uiSOMNbArcEntrant*sizeof(Carc*));
-			if(ppARCSOMArcSortant==nullptr)
-				throw Cexception(MESSAGE_ALLOCATION);
-			ppARCSOMArcSortant=(Carc**)malloc(uiSOMNbArcSortant*sizeof(Carc*));
-			if(ppARCSOMArcSortant==nullptr)
-				throw Cexception(MESSAGE_ALLOCATION);
-			unsigned int uiCompteurArc;
-			unsigned int uiCompteurArc;
+Csommet::Csommet(const Csommet & SOMObjet)
+{
+	unsigned int uiCompteurArc;
 
-			for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcEntrant; uiCompteurArc++)
-			{
-				ppARCSOMArcEntrant[uiCompteurArc] =  SOMObjet.ppARCSOMArcEntrant[uiCompteurArc];
-			}
+	uiSOMNumSommet=SOMObjet.uiSOMNumSommet;
+	uiSOMNbArcEntrant=SOMObjet.uiSOMNbArcEntrant;
+	uiSOMNbArcSortant=SOMObjet.uiSOMNbArcSortant;
+	ppARCSOMArcEntrant=(Carc**)malloc(uiSOMNbArcEntrant*sizeof(Carc*));
+	if(ppARCSOMArcSortant==nullptr)
+		throw Cexception(ERREUR_ALLOCATION);
+	ppARCSOMArcSortant=(Carc**)malloc(uiSOMNbArcSortant*sizeof(Carc*));
+	if(ppARCSOMArcSortant==nullptr)
+		throw Cexception(ERREUR_ALLOCATION);
 
-			for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcSortant; uiCompteurArc++)
-			{
-				ppARCSOMArcSortant[uiCompteurArc] =  SOMObjet.ppARCSOMArcSortant[uiCompteurArc];
-			}
+	for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcEntrant; uiCompteurArc++)
+	{
+		ppARCSOMArcEntrant[uiCompteurArc] =  SOMObjet.ppARCSOMArcEntrant[uiCompteurArc];
+	}
+
+	for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcSortant; uiCompteurArc++)
+	{
+		ppARCSOMArcSortant[uiCompteurArc] =  SOMObjet.ppARCSOMArcSortant[uiCompteurArc];
+	}
 		
-		}
+}
 
 /******************************************************************************
 Destructeur par defaut
@@ -87,11 +87,11 @@ Destructeur par defaut
 	Sortie : Rien
 	Entraine : L'objet en cours est initialisé.
 ******************************************************************************/
-		Csommet::~Csommet()
-		{
-			free(ppARCSOMArcEntrant);
-			free(ppARCSOMArcSortant);
-		}
+Csommet::~Csommet()
+{
+	free(ppARCSOMArcEntrant);
+	free(ppARCSOMArcSortant);
+}
 
 /******************************************************************************
 Méthode de lecture du numéro du sommet
@@ -101,10 +101,10 @@ Méthode de lecture du numéro du sommet
 	Sortie : Retourne le numero du sommet
 	Entraine : Néant.
 ******************************************************************************/
-		unsigned int Csommet::SOMLireNumSommet()
-		{
-			return uiSOMNumSommet;
-		}
+unsigned int Csommet::SOMLireNumSommet()
+{
+	return uiSOMNumSommet;
+}
 
 /******************************************************************************
 Méthode de modification du numéro du sommet
@@ -114,10 +114,10 @@ Méthode de modification du numéro du sommet
 	Sortie : Rien
 	Entraine : Le numero du sommet de l'objet est modifie.
 ******************************************************************************/
-		void Csommet::SOMModifierSommet(unsigned int uiNouveauNumSommet)
-		{
-			uiSOMNumSommet=uiNouveauNumSommet;
-		}
+void Csommet::SOMModifierSommet(unsigned int uiNouveauNumSommet)
+{
+	uiSOMNumSommet=uiNouveauNumSommet;
+}
 
 /******************************************************************************
 Méthode de lecture du nombre d'arcs entrants
@@ -127,10 +127,10 @@ Méthode de lecture du nombre d'arcs entrants
 	Sortie : Retourne le nombre d'arcs entrant du sommet
 	Entraine : Néant.
 ******************************************************************************/
-		unsigned int Csommet::SOMLireNbArcEntrant()
-		{
-			return uiSOMNbArcEntrant;
-		}
+unsigned int Csommet::SOMLireNbArcEntrant()
+{
+	return uiSOMNbArcEntrant;
+}
 
 /******************************************************************************
 Méthode de lecture du nombre d'arcs sortants
@@ -140,10 +140,10 @@ Méthode de lecture du nombre d'arcs sortants
 	Sortie : Retourne le nombre d'arcs sortant du sommet
 	Entraine : Néant.
 ******************************************************************************/
-		unsigned int Csommet::SOMLireNbArcSortant()
-		{
-			return uiSOMNbArcSortant;
-		}
+unsigned int Csommet::SOMLireNbArcSortant()
+{
+	return uiSOMNbArcSortant;
+}
 
 /******************************************************************************
 Méthode pour ajouter un arc au sommet
@@ -153,40 +153,40 @@ Méthode pour ajouter un arc au sommet
 	Sortie : Rien
 	Entraine : Un arc est ajouté au sommet.
 ******************************************************************************/
-		void Csommet::SOMAjouterArc(unsigned int uiDestination, bool bEntrant)
+void Csommet::SOMAjouterArc(unsigned int uiDestination, bool bEntrant)
+{
+	unsigned int uiCompteurArc;
+	if(bEntrant==true)
+	{
+		for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcEntrant; uiCompteurArc++)
 		{
-			unsigned int uiCompteurArc;
-			if(bEntrant==true)
-			{
-				for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcEntrant; uiCompteurArc++)
-				{
-					if(ppARCSOMArcEntrant[uiCompteurArc]->ARCLireDestination() == uiDestination)
-						throw Cexception(ERREUR_PARAM, "Arc Existant");
-				}
-
-				uiSOMNbArcEntrant++;
-				ppARCSOMArcEntrant=(Carc**)realloc(ppARCSOMArcEntrant, uiSOMNbArcEntrant*sizeof(Carc*));
-				if(ppARCSOMArcEntrant==nullptr)
-					throw Cexception(MESSAGE_REALLOCATION);
-				Carc * nouveauArc = new Carc(uiDestination);
-				ppARCSOMArcEntrant[uiSOMNbArcEntrant-1] = nouveauArc;
-			}
-			else
-			{
-				for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcSortant; uiCompteurArc++)
-				{
-					if(ppARCSOMArcSortant[uiCompteurArc]->ARCLireDestination() == uiDestination)
-						throw Cexception(ERREUR_PARAM, "Arc Existant");
-				}
-
-				uiSOMNbArcSortant++;
-				ppARCSOMArcSortant=(Carc**)realloc(ppARCSOMArcSortant, uiSOMNbArcSortant*sizeof(Carc*));
-				if(ppARCSOMArcSortant==nullptr)
-					throw Cexception(MESSAGE_REALLOCATION);
-				Carc * nouveauArc = new Carc(uiDestination);
-				ppARCSOMArcSortant[uiSOMNbArcSortant-1] = nouveauArc;
-			}
+			if(ppARCSOMArcEntrant[uiCompteurArc]->ARCLireDestination() == uiDestination)
+				throw Cexception(ERREUR_PARAM, "Arc Existant");
 		}
+
+		uiSOMNbArcEntrant++;
+		ppARCSOMArcEntrant=(Carc**)realloc(ppARCSOMArcEntrant, uiSOMNbArcEntrant*sizeof(Carc*));
+		if(ppARCSOMArcEntrant==nullptr)
+			throw Cexception(ERREUR_REALLOCATION);
+		Carc * nouveauArc = new Carc(uiDestination);
+		ppARCSOMArcEntrant[uiSOMNbArcEntrant-1] = nouveauArc;
+	}
+	else
+	{
+		for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcSortant; uiCompteurArc++)
+		{
+			if(ppARCSOMArcSortant[uiCompteurArc]->ARCLireDestination() == uiDestination)
+				throw Cexception(ERREUR_PARAM, "Arc Existant");
+		}
+
+		uiSOMNbArcSortant++;
+		ppARCSOMArcSortant=(Carc**)realloc(ppARCSOMArcSortant, uiSOMNbArcSortant*sizeof(Carc*));
+		if(ppARCSOMArcSortant==nullptr)
+			throw Cexception(ERREUR_REALLOCATION);
+		Carc * nouveauArc = new Carc(uiDestination);
+		ppARCSOMArcSortant[uiSOMNbArcSortant-1] = nouveauArc;
+	}
+}
 			
 /******************************************************************************
 Méthode de modification d'un arc 
@@ -197,30 +197,30 @@ Méthode de modification d'un arc
 	Sortie : Rien
 	Entraine : l'arc est modifié.
 ******************************************************************************/
-		void Csommet::SOMModifierArc(unsigned int uiAncienneDestination, bool bEntrant, unsigned int uiNouvelleDestination) 
-		{
-			unsigned int uiCompteurArc;
-			if(bEntrant==true)
-			{
-				for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcEntrant; uiCompteurArc++)
-				{ 
-					if(ppARCSOMArcEntrant[uiCompteurArc]->ARCLireDestination() == uiNouvelleDestination)
-						throw Cexception(ERREUR_PARAM, "Arc Existant");
-					if(ppARCSOMArcEntrant[uiCompteurArc]->ARCLireDestination() == uiAncienneDestination)
-						ppARCSOMArcEntrant[uiCompteurArc]->ARCModifierDestination(uiNouvelleDestination);
-				}
-			}
-			else
-			{
-				for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcSortant; uiCompteurArc++)
-				{
-					if(ppARCSOMArcSortant[uiCompteurArc]->ARCLireDestination() == uiNouvelleDestination)
-						throw Cexception(ERREUR_PARAM, "Arc Existant");
-					if(ppARCSOMArcSortant[uiCompteurArc]->ARCLireDestination() == uiAncienneDestination)
-						ppARCSOMArcEntrant[uiCompteurArc]->ARCModifierDestination(uiNouvelleDestination);
-				}
-			}
+void Csommet::SOMModifierArc(unsigned int uiAncienneDestination, bool bEntrant, unsigned int uiNouvelleDestination) 
+{
+	unsigned int uiCompteurArc;
+	if(bEntrant==true)
+	{
+		for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcEntrant; uiCompteurArc++)
+		{ 
+			if(ppARCSOMArcEntrant[uiCompteurArc]->ARCLireDestination() == uiNouvelleDestination)
+				throw Cexception(ERREUR_PARAM, "Arc Existant");
+			if(ppARCSOMArcEntrant[uiCompteurArc]->ARCLireDestination() == uiAncienneDestination)
+				ppARCSOMArcEntrant[uiCompteurArc]->ARCModifierDestination(uiNouvelleDestination);
 		}
+	}
+	else
+	{
+		for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcSortant; uiCompteurArc++)
+		{
+			if(ppARCSOMArcSortant[uiCompteurArc]->ARCLireDestination() == uiNouvelleDestination)
+				throw Cexception(ERREUR_PARAM, "Arc Existant");
+			if(ppARCSOMArcSortant[uiCompteurArc]->ARCLireDestination() == uiAncienneDestination)
+				ppARCSOMArcEntrant[uiCompteurArc]->ARCModifierDestination(uiNouvelleDestination);
+		}
+	}
+}
 		
 /******************************************************************************
 Méthode de suppression d'un arc 
@@ -230,51 +230,66 @@ Méthode de suppression d'un arc
 	Sortie : Rien
 	Entraine : l'arc est supprimé si existant.
 ******************************************************************************/
-		void Csommet::SOMSupprimerArc(unsigned int uiDestination, bool bEntrant) //précondition : arc existant
+void Csommet::SOMSupprimerArc(unsigned int uiDestination, bool bEntrant) //précondition : arc existant
+{
+	unsigned int uiCompteurArc;
+
+	if(bEntrant==true)
+	{
+		while(ppARCSOMArcEntrant[uiCompteurArc]->ARCLireDestination() != uiDestination && uiCompteurArc < uiSOMNbArcEntrant )
 		{
-			unsigned int uiCompteurArc;
-
-			if(bEntrant==true)
-			{
-				while(ppARCSOMArcEntrant[uiCompteurArc]->ARCLireDestination() != uiDestination && uiCompteurArc < uiSOMNbArcEntrant )
-				{
-					uiCompteurArc++;
-				}
-				
-				if(ppARCSOMArcEntrant[uiCompteurArc]->ARCLireDestination() == uiDestination && uiCompteurArc < uiSOMNbArcEntrant)
-					free(ppARCSOMArcEntrant[uiCompteurArc]);
-
-				while(uiCompteurArc< uiSOMNbArcEntrant-1)
-				{
-						ppARCSOMArcEntrant[uiCompteurArc]=ppARCSOMArcEntrant[uiCompteurArc+1];
-						uiCompteurArc++;
-				}
-
-				uiSOMNbArcEntrant--;
-				ppARCSOMArcEntrant=(Carc**)realloc(ppARCSOMArcEntrant, uiSOMNbArcEntrant*sizeof(Carc*));
-				if(ppARCSOMArcEntrant==nullptr)
-					throw Cexception(MESSAGE_REALLOCATION);
-
-			}
-			else
-			{
-				while(ppARCSOMArcSortant[uiCompteurArc]->ARCLireDestination() != uiDestination && uiCompteurArc < uiSOMNbArcSortant )
-				{
-					uiCompteurArc++;
-				}
-				
-				if(ppARCSOMArcSortant[uiCompteurArc]->ARCLireDestination() == uiDestination && uiCompteurArc < uiSOMNbArcSortant)
-					free(ppARCSOMArcSortant[uiCompteurArc]);
-
-				while(uiCompteurArc< uiSOMNbArcSortant-1)
-				{
-						ppARCSOMArcSortant[uiCompteurArc]=ppARCSOMArcSortant[uiCompteurArc+1];
-						uiCompteurArc++;
-				}
-
-				uiSOMNbArcSortant--;
-				ppARCSOMArcSortant=(Carc**)realloc(ppARCSOMArcSortant, uiSOMNbArcSortant*sizeof(Carc*));
-				if(ppARCSOMArcSortant==nullptr)
-					throw Cexception(MESSAGE_REALLOCATION);
-			}
+			uiCompteurArc++;
 		}
+				
+		if(ppARCSOMArcEntrant[uiCompteurArc]->ARCLireDestination() == uiDestination && uiCompteurArc < uiSOMNbArcEntrant)
+			free(ppARCSOMArcEntrant[uiCompteurArc]);
+
+		while(uiCompteurArc< uiSOMNbArcEntrant-1)
+		{
+				ppARCSOMArcEntrant[uiCompteurArc]=ppARCSOMArcEntrant[uiCompteurArc+1];
+				uiCompteurArc++;
+		}
+
+		uiSOMNbArcEntrant--;
+		ppARCSOMArcEntrant=(Carc**)realloc(ppARCSOMArcEntrant, uiSOMNbArcEntrant*sizeof(Carc*));
+		if(ppARCSOMArcEntrant==nullptr)
+			throw Cexception(ERREUR_REALLOCATION);
+
+	}
+	else
+	{
+		while(ppARCSOMArcSortant[uiCompteurArc]->ARCLireDestination() != uiDestination && uiCompteurArc < uiSOMNbArcSortant )
+		{
+			uiCompteurArc++;
+		}
+				
+		if(ppARCSOMArcSortant[uiCompteurArc]->ARCLireDestination() == uiDestination && uiCompteurArc < uiSOMNbArcSortant)
+			free(ppARCSOMArcSortant[uiCompteurArc]);
+
+		while(uiCompteurArc< uiSOMNbArcSortant-1)
+		{
+				ppARCSOMArcSortant[uiCompteurArc]=ppARCSOMArcSortant[uiCompteurArc+1];
+				uiCompteurArc++;
+		}
+
+		uiSOMNbArcSortant--;
+		ppARCSOMArcSortant=(Carc**)realloc(ppARCSOMArcSortant, uiSOMNbArcSortant*sizeof(Carc*));
+		if(ppARCSOMArcSortant==nullptr)
+			throw Cexception(ERREUR_REALLOCATION);
+	}
+}
+
+/******************************************************************************
+Méthode de lecture de la liste des arcs
+*******************************************************************************
+	Entrée : vrai pour obtenir la liste des arcs entrant, faux sinon
+	Necessité : Néant.
+	Sortie : Un pointeur sur la liste des arcs
+	Entraine : La bonne liste d'arcs est renvoyée
+******************************************************************************/
+Carc ** Csommet::SOMLireArcs(bool bEntrant)
+{
+	if(bEntrant)
+		return ppARCSOMArcEntrant;
+	else return ppARCSOMArcSortant;
+}
