@@ -17,7 +17,7 @@ Cgraph::Cgraph(const Cgraph & GRAObjet)
 {
 	unsigned int uiCompteur;
 
-	ppSOMGRAListSommets = (Csommet **)malloc(GRAObjet.uiGRAnbrSommets);
+	ppSOMGRAListSommets = (Csommet **)malloc(GRAObjet.uiGRAnbrSommets * sizeof(Csommet));
 	if(ppSOMGRAListSommets == nullptr)
 		throw Cexception(ERREUR_ALLOCATION);
 	uiGRAnbrSommets = GRAObjet.uiGRAnbrSommets;
@@ -30,7 +30,7 @@ Cgraph::Cgraph(Csommet *** pppSOMListSommets, unsigned int uiNbrSommets)
 {
 	unsigned int uiCompteur;
 
-	ppSOMGRAListSommets = (Csommet **)malloc(uiNbrSommets);
+	ppSOMGRAListSommets = (Csommet **)malloc(uiNbrSommets * sizeof(Csommet));
 	if(ppSOMGRAListSommets == nullptr)
 		throw Cexception(ERREUR_ALLOCATION);
 	uiGRAnbrSommets = uiNbrSommets;
@@ -54,7 +54,7 @@ void Cgraph::GRAajouterSommet(Csommet * pSOMSommet)
 			throw Cexception(ERREUR_PARAM, "Sommet deja present dans le graph");
 	
 	uiGRAnbrSommets++;
-	ppSOMGRAListSommets = (Csommet **)realloc(ppSOMGRAListSommets, uiGRAnbrSommets);
+	ppSOMGRAListSommets = (Csommet **)realloc(ppSOMGRAListSommets, uiGRAnbrSommets * sizeof(Csommet *));
 	if(ppSOMGRAListSommets == nullptr)
 		throw Cexception(ERREUR_REALLOCATION);
 
@@ -73,10 +73,18 @@ void Cgraph::GRAsupprimerSommet(unsigned int uiNumSommet)
 	}
 
 	//Ensuite on retire le sommet
-	for(uiCompteur = uiNumSommet; uiCompteur < uiGRAnbrSommets - 1; uiCompteur++)
+	uiCompteur = 0;
+	while(ppSOMGRAListSommets[uiCompteur]->SOMLireNumSommet() != uiNumSommet)
+	{
+		uiCompteur++;
+		if(uiCompteur >= uiGRAnbrSommets)
+			throw Cexception(ERREUR_PARAM, "Sommet inexistant");
+	}
+	delete ppSOMGRAListSommets[uiCompteur];
+	for(; uiCompteur < uiGRAnbrSommets - 1; uiCompteur++)
 		ppSOMGRAListSommets[uiCompteur] = ppSOMGRAListSommets[uiCompteur + 1];
 	
-	ppSOMGRAListSommets = (Csommet **)realloc(ppSOMGRAListSommets, uiGRAnbrSommets - 1);
+	ppSOMGRAListSommets = (Csommet **)realloc(ppSOMGRAListSommets, (uiGRAnbrSommets - 1) * sizeof(Csommet *));
 	if(ppSOMGRAListSommets == nullptr)
 		throw Cexception(ERREUR_REALLOCATION);
 
@@ -106,44 +114,60 @@ void Cgraph::GRAmodifierSommet(unsigned int uiAncienNum, unsigned int uiNouveauN
 void Cgraph::GRAajouterArc(unsigned int uiNumSommetDebut, unsigned int uiNumSommetFin)
 {
 	unsigned int uiCompteur;
+	bool bSommetDebutTrouvee = false, bSommetFinTrouvee = false;
 	
 	if(uiNumSommetDebut == uiNumSommetFin)
-		throw Cexception(ERREUR_PARAM, "Valeurs differentes attenduent");
+		throw Cexception(ERREUR_PARAM, "Valeurs differentes attendues");
 
+	//On test si les sommets en paramètre existent
 	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
 	{
 		if(ppSOMGRAListSommets[uiCompteur]->SOMLireNumSommet() == uiNumSommetDebut)
-		{
-			ppSOMGRAListSommets[uiCompteur]->SOMAjouterArc(uiNumSommetDebut, false);
-			ppSOMGRAListSommets[uiCompteur]->SOMAjouterArc(uiNumSommetFin, true);
-		}
+			bSommetDebutTrouvee = true;
+		if(ppSOMGRAListSommets[uiCompteur]->SOMLireNumSommet() == uiNumSommetFin)
+			bSommetFinTrouvee = true;
+	}
+	if(!bSommetDebutTrouvee || !bSommetFinTrouvee)
+		throw Cexception(ERREUR_PARAM, "Sommets inexistants");
+
+	//Ensuite on ajoute l'arc en question
+	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
+	{
 		if(ppSOMGRAListSommets[uiCompteur]->SOMLireNumSommet() == uiNumSommetDebut)
-		{
 			ppSOMGRAListSommets[uiCompteur]->SOMAjouterArc(uiNumSommetFin, false);
+
+		if(ppSOMGRAListSommets[uiCompteur]->SOMLireNumSommet() == uiNumSommetFin)
 			ppSOMGRAListSommets[uiCompteur]->SOMAjouterArc(uiNumSommetDebut, true);
-		}
 	}
 }
 
 void Cgraph::GRAsupprimerArc(unsigned int uiNumSommetDebut, unsigned int uiNumSommetFin)
 {
 	unsigned int uiCompteur;
+	bool bSommetDebutTrouvee = false, bSommetFinTrouvee = false;
 	
 	if(uiNumSommetDebut == uiNumSommetFin)
-		throw Cexception(ERREUR_PARAM, "Valeurs differentes attenduent");
-
+		throw Cexception(ERREUR_PARAM, "Valeurs differentes attendues");
+	
+	//On test si les sommets en paramètre existent
 	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
 	{
 		if(ppSOMGRAListSommets[uiCompteur]->SOMLireNumSommet() == uiNumSommetDebut)
-		{
-			ppSOMGRAListSommets[uiCompteur]->SOMSupprimerArc(uiNumSommetFin, false);
-			ppSOMGRAListSommets[uiCompteur]->SOMSupprimerArc(uiNumSommetDebut, true);
-		}
+			bSommetDebutTrouvee = true;
+		if(ppSOMGRAListSommets[uiCompteur]->SOMLireNumSommet() == uiNumSommetFin)
+			bSommetFinTrouvee = true;
+	}
+	if(!bSommetDebutTrouvee || !bSommetFinTrouvee)
+		throw Cexception(ERREUR_PARAM, "Sommets inexistants");
+
+	//Puis on supprime l'arc en question
+	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
+	{
 		if(ppSOMGRAListSommets[uiCompteur]->SOMLireNumSommet() == uiNumSommetDebut)
-		{
-			ppSOMGRAListSommets[uiCompteur]->SOMSupprimerArc(uiNumSommetDebut, false);
-			ppSOMGRAListSommets[uiCompteur]->SOMSupprimerArc(uiNumSommetFin, true);
-		}
+			ppSOMGRAListSommets[uiCompteur]->SOMSupprimerArc(uiNumSommetFin, false);
+
+		if(ppSOMGRAListSommets[uiCompteur]->SOMLireNumSommet() == uiNumSommetFin)
+			ppSOMGRAListSommets[uiCompteur]->SOMSupprimerArc(uiNumSommetDebut, true);
 	}
 }
 
@@ -160,19 +184,28 @@ void Cgraph::GRAafficherGraph()
 
 		cout << "Arcs entrants :" << endl;
 		for(uiCompteurArcs = 0; uiCompteurArcs < ppSOMGRAListSommets[uiCompteurSommets]->SOMLireNbArcEntrant(); uiCompteurArcs++)
-			cout << "-> " << ppSOMGRAListSommets[uiCompteurSommets]->SOMLireArcs(true)[uiCompteurArcs]->ARCLireDestination() << endl;
+			cout <<  ppSOMGRAListSommets[uiCompteurSommets]->SOMLireArcs(true)[uiCompteurArcs]->ARCLireDestination() << " -> " << endl;
 		
 		cout << "Arcs sortants :" << endl;
 		for(uiCompteurArcs = 0; uiCompteurArcs < ppSOMGRAListSommets[uiCompteurSommets]->SOMLireNbArcSortant(); uiCompteurArcs++)
-			cout << "-> " << ppSOMGRAListSommets[uiCompteurSommets]->SOMLireArcs(false)[uiCompteurArcs]->ARCLireDestination() << endl;
+			cout << " -> " << ppSOMGRAListSommets[uiCompteurSommets]->SOMLireArcs(false)[uiCompteurArcs]->ARCLireDestination() << endl;
 	}
+}
+
+void Cgraph::GRAvider()
+{
+	unsigned int uiCompteur;
+
+	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
+		delete ppSOMGRAListSommets[uiCompteur];
+	free(ppSOMGRAListSommets);
 }
 
 Cgraph & Cgraph::operator=(Cgraph const & GRAObjet)
 {
 	unsigned int uiCompteur;
 
-	ppSOMGRAListSommets = (Csommet **)realloc(ppSOMGRAListSommets, GRAObjet.uiGRAnbrSommets);
+	ppSOMGRAListSommets = (Csommet **)realloc(ppSOMGRAListSommets, GRAObjet.uiGRAnbrSommets * sizeof(Csommet *));
 	if(ppSOMGRAListSommets == nullptr)
 		throw Cexception(ERREUR_REALLOCATION);
 

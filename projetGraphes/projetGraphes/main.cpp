@@ -24,20 +24,18 @@ void main()
 	ppcBalises[3] = _strdup("NBARCS");
 
 	try{
-		cout << "Lecture du grph" << endl;
+		cout << "Lecture du graph" << endl;
 		PARparseur = new Cparseur(ppcBalises, uiNbrBalises);
 		PARparseur->PARLire("graph.txt");
-	}
-	catch(Cexception EXCexception)
-	{
-		cout << "Erreur " << EXCexception.EXCLire_Valeur();
-		cout << " " << EXCexception.EXCLire_Message() << endl;
-	}
+		cout << "graph lu" << endl;
 
-	try{
-		cout << "Création du graph" << endl;
+		cout << "Creation du graph" << endl;
 		GRGgenerateur = new CgraphGenerateur(PARparseur);
 		GRAgraph = GRGgenerateur->GRGgenererGraph();
+		cout << "graph cree" << endl;
+
+		cout << "Affichage du graph" << endl;
+		GRAgraph->GRAafficherGraph();
 	}
 	catch(Cexception EXCexception)
 	{
@@ -45,8 +43,6 @@ void main()
 		cout << " " << EXCexception.EXCLire_Message() << endl;
 	}
 
-	cout << "Affichage du graph" << endl;
-	GRAgraph->GRAafficherGraph();
 
 	this_thread::sleep_for(chrono::seconds(5));
 }

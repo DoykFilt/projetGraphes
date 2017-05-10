@@ -47,10 +47,7 @@ Cgraph * CgraphGenerateur::GRGgenererGraph()
 	for(uiCompteurPrincipal = 0; uiCompteurPrincipal < pPARGRGparseur->PARLireNbrBalise(); uiCompteurPrincipal++)
 		if(strcmp("SOMMETS", pppcBrut[uiCompteurPrincipal][0]) == 0)
 			for(uiCompteurSecondaire = 0; uiCompteurSecondaire < uiNbrSommets; uiCompteurSecondaire++)
-			{
-				SOMsommet = new Csommet(GRGreconnaitreEntier(pPARGRGparseur->PARvaleurSuivante("NUMERO", pppcBrut[uiCompteurPrincipal][1])));
-				GRAgraph->GRAajouterSommet(SOMsommet);
-			}
+				GRAgraph->GRAajouterSommet(new Csommet(GRGreconnaitreEntier(pPARGRGparseur->PARvaleurSuivante("NUMERO", pppcBrut[uiCompteurPrincipal][1]))));
 
 	//Et enfin les arcs
 	for(uiCompteurPrincipal = 0; uiCompteurPrincipal < pPARGRGparseur->PARLireNbrBalise(); uiCompteurPrincipal++)

@@ -152,17 +152,23 @@ Entraine : Retourne le message entier
 ******************************************************************************/
 char * Cexception::EXCLire_Message() const
 {
-	size_t stTailleMessage = strlen(pcEXCMessage) + strlen(pcEXCMessageDetail) + 1;
+	size_t stTailleMessage = strlen(pcEXCMessage) + strlen(pcEXCMessageDetail) + 2;
 	char* pcMessageComplet = new char[stTailleMessage + 1];
 	unsigned int uiCompteurMessage, uiCompteurDetail;
 
 	for(uiCompteurMessage = 0; uiCompteurMessage < strlen(pcEXCMessage); uiCompteurMessage++)
 		pcMessageComplet[uiCompteurMessage] = pcEXCMessage[uiCompteurMessage];
+
 	pcMessageComplet[uiCompteurMessage] = ' ';
+	uiCompteurMessage++;
+	pcMessageComplet[uiCompteurMessage] = '-';
+	uiCompteurMessage++;
+	pcMessageComplet[uiCompteurMessage] = ' ';
+	uiCompteurMessage++;
 	
-	for(uiCompteurDetail = 0; uiCompteurDetail < strlen(pcEXCMessage); uiCompteurDetail++)
+	for(uiCompteurDetail = 0; uiCompteurDetail < strlen(pcEXCMessageDetail); uiCompteurDetail++)
 		pcMessageComplet[uiCompteurMessage + uiCompteurDetail] = pcEXCMessageDetail[uiCompteurDetail];
-	pcMessageComplet[uiCompteurMessage] = '\0';
+	pcMessageComplet[uiCompteurMessage + uiCompteurDetail] = '\0';
 
 	return pcMessageComplet;
 } 

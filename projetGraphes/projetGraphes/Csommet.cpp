@@ -14,6 +14,7 @@ Csommet::Csommet()
 {
 	uiSOMNbArcEntrant=0;
 	uiSOMNbArcSortant=0;
+	uiSOMNumSommet = 0;
 	ppARCSOMArcEntrant=(Carc**)malloc(uiSOMNbArcEntrant*sizeof(Carc*));
 	if(ppARCSOMArcEntrant==nullptr)
 		throw Cexception(ERREUR_ALLOCATION);
@@ -76,7 +77,6 @@ Csommet::Csommet(const Csommet & SOMObjet)
 	{
 		ppARCSOMArcSortant[uiCompteurArc] =  SOMObjet.ppARCSOMArcSortant[uiCompteurArc];
 	}
-		
 }
 
 /******************************************************************************
@@ -89,6 +89,12 @@ Destructeur par defaut
 ******************************************************************************/
 Csommet::~Csommet()
 {
+	unsigned int uiCompteur;
+
+	for(uiCompteur = 0; uiCompteur < uiSOMNbArcEntrant; uiCompteur++)
+		delete ppARCSOMArcEntrant[uiCompteur];
+	for(uiCompteur = 0; uiCompteur < uiSOMNbArcSortant; uiCompteur++)
+		delete ppARCSOMArcSortant[uiCompteur];
 	free(ppARCSOMArcEntrant);
 	free(ppARCSOMArcSortant);
 }
@@ -156,6 +162,8 @@ Méthode pour ajouter un arc au sommet
 void Csommet::SOMAjouterArc(unsigned int uiDestination, bool bEntrant)
 {
 	unsigned int uiCompteurArc;
+	Carc * nouveauArc;
+
 	if(bEntrant==true)
 	{
 		for(uiCompteurArc=0; uiCompteurArc < uiSOMNbArcEntrant; uiCompteurArc++)
@@ -168,7 +176,7 @@ void Csommet::SOMAjouterArc(unsigned int uiDestination, bool bEntrant)
 		ppARCSOMArcEntrant=(Carc**)realloc(ppARCSOMArcEntrant, uiSOMNbArcEntrant*sizeof(Carc*));
 		if(ppARCSOMArcEntrant==nullptr)
 			throw Cexception(ERREUR_REALLOCATION);
-		Carc * nouveauArc = new Carc(uiDestination);
+		nouveauArc = new Carc(uiDestination);
 		ppARCSOMArcEntrant[uiSOMNbArcEntrant-1] = nouveauArc;
 	}
 	else
@@ -183,7 +191,7 @@ void Csommet::SOMAjouterArc(unsigned int uiDestination, bool bEntrant)
 		ppARCSOMArcSortant=(Carc**)realloc(ppARCSOMArcSortant, uiSOMNbArcSortant*sizeof(Carc*));
 		if(ppARCSOMArcSortant==nullptr)
 			throw Cexception(ERREUR_REALLOCATION);
-		Carc * nouveauArc = new Carc(uiDestination);
+		nouveauArc = new Carc(uiDestination);
 		ppARCSOMArcSortant[uiSOMNbArcSortant-1] = nouveauArc;
 	}
 }
@@ -242,7 +250,7 @@ void Csommet::SOMSupprimerArc(unsigned int uiDestination, bool bEntrant) //préco
 		}
 				
 		if(ppARCSOMArcEntrant[uiCompteurArc]->ARCLireDestination() == uiDestination && uiCompteurArc < uiSOMNbArcEntrant)
-			free(ppARCSOMArcEntrant[uiCompteurArc]);
+			delete ppARCSOMArcEntrant[uiCompteurArc];
 
 		while(uiCompteurArc< uiSOMNbArcEntrant-1)
 		{
@@ -264,7 +272,7 @@ void Csommet::SOMSupprimerArc(unsigned int uiDestination, bool bEntrant) //préco
 		}
 				
 		if(ppARCSOMArcSortant[uiCompteurArc]->ARCLireDestination() == uiDestination && uiCompteurArc < uiSOMNbArcSortant)
-			free(ppARCSOMArcSortant[uiCompteurArc]);
+			delete ppARCSOMArcSortant[uiCompteurArc];
 
 		while(uiCompteurArc< uiSOMNbArcSortant-1)
 		{

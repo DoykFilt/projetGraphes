@@ -26,7 +26,7 @@ public :
 	void GRAajouterArc(unsigned int uiNumSommetDebut, unsigned int uiNumSommetFin);
 	void GRAsupprimerArc(unsigned int uiNumSommetDebut, unsigned int uiNumSommetFin);
 	void GRAafficherGraph();
-	void GRAdeleteAll();
+	void GRAvider();
 
 	//Surcharge d'operateur
 	Cgraph & operator=(Cgraph const & GRAObjet);
