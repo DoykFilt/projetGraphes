@@ -3,23 +3,60 @@
 #include "Cexception.h"
 
 
+/******************************************************************************
+Constructeur
+*******************************************************************************
+Entrée : Rien
+Necessité : Néant
+Sortie : Rien
+Entraine : L'objet a été initialisé
+******************************************************************************/
 CgraphGenerateur::CgraphGenerateur()
 {
 	pPARGRGparseur = nullptr;
 }
-
+/******************************************************************************
+Constructeur avec un argument
+*******************************************************************************
+Entrée : un pointeur sur un objet de type Cparseur
+Necessité : Néant
+Sortie : Rien
+Entraine : L'objet a été initialisé
+******************************************************************************/
 CgraphGenerateur::CgraphGenerateur(Cparseur * pPARparseur)
 {
 	pPARGRGparseur = pPARparseur;
 }
-
+/******************************************************************************
+Constructeur de recopie
+*******************************************************************************
+Entrée : Référence sur un objet de type CgraphGenerateur
+Necessité : Néant
+Sortie : Rien
+Entraine : L'objet a été initialisé par recopie de l'objet en paramètre
+******************************************************************************/
 CgraphGenerateur::CgraphGenerateur(const CgraphGenerateur & GRGObjet)
 {
 	pPARGRGparseur = GRGObjet.pPARGRGparseur;
 }
-
+/******************************************************************************
+Destructeur
+*******************************************************************************
+Entrée : Rien
+Necessité : L'arbre a été désalloué
+Sortie : Rien
+Entraine : L'espace alloué pour les attributs de l'objet a été libéré
+******************************************************************************/
 CgraphGenerateur::~CgraphGenerateur(){}
 
+/******************************************************************************
+GRGgenererGraph
+*******************************************************************************
+Entrée : Rien
+Necessité : Le parseur a récupéré les données brutes préalablement
+Sortie : l'objet reconnu de type Cgraph 
+Entraine : un objet de type Cgraph a été alloué et retourné
+******************************************************************************/
 Cgraph * CgraphGenerateur::GRGgenererGraph()
 {
 	Cgraph * GRAgraph;
@@ -46,35 +83,71 @@ Cgraph * CgraphGenerateur::GRGgenererGraph()
 	for(uiCompteurPrincipal = 0; uiCompteurPrincipal < pPARGRGparseur->PARLireNbrBalise(); uiCompteurPrincipal++)
 		if(strcmp("SOMMETS", pppcBrut[uiCompteurPrincipal][0]) == 0)
 			for(uiCompteurSecondaire = 0; uiCompteurSecondaire < uiNbrSommets; uiCompteurSecondaire++)
-				GRAgraph->GRAajouterSommet(new Csommet(GRGreconnaitreEntier(pPARGRGparseur->PARvaleurSuivante("NUMERO", pppcBrut[uiCompteurPrincipal][1]))));
+			{
+				try
+				{
+					GRAgraph->GRAajouterSommet(new Csommet(GRGreconnaitreEntier(pPARGRGparseur->PARvaleurSuivante("NUMERO", pppcBrut[uiCompteurPrincipal][1]))));
+				}
+				catch(Cexception EXCexception)
+				{
+					cout << "Erreur " << EXCexception.EXCLire_Valeur();
+					cout << " " << EXCexception.EXCLire_Message() << endl;
+				}
+			}
 
 	//Et enfin les arcs
 	for(uiCompteurPrincipal = 0; uiCompteurPrincipal < pPARGRGparseur->PARLireNbrBalise(); uiCompteurPrincipal++)
 		if(strcmp("ARCS", pppcBrut[uiCompteurPrincipal][0]) == 0)
-			for(uiCompteurSecondaire = 0; uiCompteurSecondaire < uiNbrSommets; uiCompteurSecondaire++)
-				GRAgraph->GRAajouterArc(GRGreconnaitreEntier(pPARGRGparseur->PARvaleurSuivante("DEBUT", pppcBrut[uiCompteurPrincipal][1])),
-										GRGreconnaitreEntier(pPARGRGparseur->PARvaleurSuivante("FIN", pppcBrut[uiCompteurPrincipal][1])));
+			for(uiCompteurSecondaire = 0; uiCompteurSecondaire < uiNbrArcs; uiCompteurSecondaire++)
+			{
+				try
+				{
+					GRAgraph->GRAajouterArc(GRGreconnaitreEntier(pPARGRGparseur->PARvaleurSuivante("DEBUT", pppcBrut[uiCompteurPrincipal][1])),
+											GRGreconnaitreEntier(pPARGRGparseur->PARvaleurSuivante("FIN", pppcBrut[uiCompteurPrincipal][1])));
+				}
+				catch(Cexception EXCexception)
+				{
+					cout << "Erreur " << EXCexception.EXCLire_Valeur();
+					cout << " " << EXCexception.EXCLire_Message() << endl;
+				}
+			}
 
 	return GRAgraph;
 }
 
+/******************************************************************************
+GRGsetParseur
+*******************************************************************************
+Entrée : Un pointeur sur un objet de type Cparseur
+Necessité : Néant
+Sortie : Rien
+Entraine : L'ancien parseur a été remplacé par le nouveau
+******************************************************************************/
 void CgraphGenerateur::GRGsetParseur(Cparseur * pPARparseur)
 {
 	pPARGRGparseur = pPARparseur;
 }
 
+/******************************************************************************
+GRGgetParseur
+*******************************************************************************
+Entrée : Rien
+Necessité : Néant
+Sortie : Un poiteur sur le parseur
+Entraine : Le pointeur a été retourné
+******************************************************************************/
 Cparseur * CgraphGenerateur::GRGgetParseur()
 {
 	return pPARGRGparseur;
 }
 
 /******************************************************************************
-PARreconnaitreEntier
+GRGreconnaitreEntier
 *******************************************************************************
-Entrée : une chaîne de caractères
-Necessité : le paramètre est convertible en int
-Sortie : L'entier détecté
-Entraine : L'entier retourné est une taille valide
+Entrée : une chaine de caractère contenant l'entier à reconnaitre
+Necessité : La chaine est convertible en entier
+Sortie : L'entier reconnu
+Entraine : L'entier a été reconnu et renvoyé
 ******************************************************************************/
 unsigned int CgraphGenerateur::GRGreconnaitreEntier(char * pcElm)
 {
@@ -90,6 +163,14 @@ unsigned int CgraphGenerateur::GRGreconnaitreEntier(char * pcElm)
 	return (unsigned int)liTemp;
 }
 
+/******************************************************************************
+surcharge de l'opérateur d'affectation
+*******************************************************************************
+Entrée : un objet du même type
+Necessité : Néant
+Sortie : Une référence sur l'objet en cours qui a été modifié
+Entraine : L'objet en cours est une copie de l'objet en paramètre
+******************************************************************************/
 CgraphGenerateur & CgraphGenerateur::operator=(CgraphGenerateur const & GRGObjet)
 {
 	pPARGRGparseur = GRGObjet.pPARGRGparseur;

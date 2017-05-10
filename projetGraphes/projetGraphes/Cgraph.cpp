@@ -5,6 +5,14 @@
 
 using namespace std;
 
+/******************************************************************************
+Constructeur
+*******************************************************************************
+Entrée : Rien
+Necessité : Néant
+Sortie : Rien
+Entraine : L'objet a été initialisé
+******************************************************************************/
 Cgraph::Cgraph()
 {
 	ppSOMGRAListSommets = (Csommet **)malloc(0);
@@ -12,7 +20,14 @@ Cgraph::Cgraph()
 		throw Cexception(ERREUR_ALLOCATION, "Constructeur par defaut Cgraph");
 	uiGRAnbrSommets = 0;
 }
-
+/******************************************************************************
+Constructeur de recopie
+*******************************************************************************
+Entrée : Référence sur un objet de type Cgraph
+Necessité : Néant
+Sortie : Rien
+Entraine : L'objet a été initialisé par recopie de l'objet en paramètre
+******************************************************************************/
 Cgraph::Cgraph(const Cgraph & GRAObjet)
 {
 	unsigned int uiCompteur;
@@ -25,7 +40,14 @@ Cgraph::Cgraph(const Cgraph & GRAObjet)
 	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
 		ppSOMGRAListSommets[uiCompteur] = new Csommet(*GRAObjet.ppSOMGRAListSommets[uiCompteur]);
 }
-
+/******************************************************************************
+Constructeur avec deux arguments
+*******************************************************************************
+Entrée : un pointeur sur une liste de pointeur sur des sommets et le nombre de sommet
+Necessité : Le nombre de sommets contenus dans la liste correspond à uiNbrSommets
+Sortie : Rien
+Entraine : L'objet a été initialisé
+******************************************************************************/
 Cgraph::Cgraph(Csommet *** pppSOMListSommets, unsigned int uiNbrSommets)
 {
 	unsigned int uiCompteur;
@@ -38,13 +60,28 @@ Cgraph::Cgraph(Csommet *** pppSOMListSommets, unsigned int uiNbrSommets)
 	for(uiCompteur = 0; uiCompteur < uiGRAnbrSommets; uiCompteur++)
 		ppSOMGRAListSommets[uiCompteur] = new Csommet(*(*(pppSOMListSommets)[uiCompteur]));
 }
-
+/******************************************************************************
+Destructeur
+*******************************************************************************
+Entrée : Rien
+Necessité : L'arbre a été désalloué
+Sortie : Rien
+Entraine : L'espace alloué pour les attributs de l'objet a été libéré
+******************************************************************************/
 Cgraph::~Cgraph()
 {
 	free(ppSOMGRAListSommets);
 }
 
 
+/******************************************************************************
+GRAajouterSommet
+*******************************************************************************
+Entrée : pSOMSommet un pointeur sur un sommet
+Necessité : Le sommet n'est pas déjà contenu dans le graph
+Sortie : Rien
+Entraine : le sommet a été ajouté au graph ou exception si déjà présent
+******************************************************************************/
 void Cgraph::GRAajouterSommet(Csommet * pSOMSommet)
 {
 	unsigned int uiCompteur;
@@ -61,6 +98,14 @@ void Cgraph::GRAajouterSommet(Csommet * pSOMSommet)
 	ppSOMGRAListSommets[uiGRAnbrSommets - 1] = new Csommet(*pSOMSommet);
 }
 
+/******************************************************************************
+GRAsupprimerSommet
+*******************************************************************************
+Entrée : le numéro du sommet à supprimer
+Necessité : le numéro correspond à un sommet
+Sortie : Rien
+Entraine : le sommet a été supprimé du graph ou rien si sommet inexistant
+******************************************************************************/
 void Cgraph::GRAsupprimerSommet(unsigned int uiNumSommet)
 {
 	unsigned int uiCompteur;
@@ -91,6 +136,14 @@ void Cgraph::GRAsupprimerSommet(unsigned int uiNumSommet)
 	uiGRAnbrSommets--;
 }
 
+/******************************************************************************
+GRAmodifierSommet
+*******************************************************************************
+Entrée : le numéro du sommet à modifier et le nouveau numéro à lui appliquer
+Necessité : le sommet est existant et le nouveau n'est pas déjà pris
+Sortie : Rien
+Entraine : le sommet a été modifié
+******************************************************************************/
 void Cgraph::GRAmodifierSommet(unsigned int uiAncienNum, unsigned int uiNouveauNum)
 {
 	unsigned int uiCompteur;
@@ -110,7 +163,14 @@ void Cgraph::GRAmodifierSommet(unsigned int uiAncienNum, unsigned int uiNouveauN
 		ppSOMGRAListSommets[uiCompteur]->SOMModifierArc(uiAncienNum, false, uiNouveauNum); //et ceux sortant
 	}
 }
-
+/******************************************************************************
+GRAajouterArc
+*******************************************************************************
+Entrée : les deux numéro des sommets à relier, le destinataire et le destinateur
+Necessité : les sommets existent
+Sortie : Rien
+Entraine : l'arc a été créé
+******************************************************************************/
 void Cgraph::GRAajouterArc(unsigned int uiNumSommetDebut, unsigned int uiNumSommetFin)
 {
 	unsigned int uiCompteur;
@@ -137,7 +197,14 @@ void Cgraph::GRAajouterArc(unsigned int uiNumSommetDebut, unsigned int uiNumSomm
 			ppSOMGRAListSommets[uiCompteur]->SOMAjouterArc(uiNumSommetDebut, true);
 	}
 }
-
+/******************************************************************************
+GRASupprimerArc
+*******************************************************************************
+Entrée : les deux numéro des sommets à relier, le destinataire et le destinateur
+Necessité : les sommets et l'arc existent
+Sortie : Rien
+Entraine : l'arc a été supprimer
+******************************************************************************/
 void Cgraph::GRAsupprimerArc(unsigned int uiNumSommetDebut, unsigned int uiNumSommetFin)
 {
 	unsigned int uiCompteur;
@@ -167,7 +234,14 @@ void Cgraph::GRAsupprimerArc(unsigned int uiNumSommetDebut, unsigned int uiNumSo
 			ppSOMGRAListSommets[uiCompteur]->SOMSupprimerArc(uiNumSommetDebut, true);
 	}
 }
-
+/******************************************************************************
+GRAafficherGraph
+*******************************************************************************
+Entrée : Rien
+Necessité : Néant
+Sortie : Rien
+Entraine : L'arc a été afficher sur la console
+******************************************************************************/
 void Cgraph::GRAafficherGraph()
 {
 	unsigned int uiCompteurSommets, uiCompteurArcs;
@@ -189,6 +263,14 @@ void Cgraph::GRAafficherGraph()
 	}
 }
 
+/******************************************************************************
+GRAvider
+*******************************************************************************
+Entrée : Rien
+Necessité : Néant
+Sortie : Rien
+Entraine : L'espace alloué pour les sommets et les arcs a été libéré
+******************************************************************************/
 void Cgraph::GRAvider()
 {
 	unsigned int uiCompteur;
@@ -199,6 +281,14 @@ void Cgraph::GRAvider()
 	ppSOMGRAListSommets = (Csommet **)realloc(ppSOMGRAListSommets, uiGRAnbrSommets);
 }
 
+/******************************************************************************
+GRAinverser
+*******************************************************************************
+Entrée : Rien
+Necessité : Néant
+Sortie : Rien
+Entraine : Les arcs entrants ont été remplacés par les arcs sortant et vice-versa
+******************************************************************************/
 void Cgraph::GRAinverser()
 {
 	unsigned int uiCompteur;
@@ -207,6 +297,14 @@ void Cgraph::GRAinverser()
 		ppSOMGRAListSommets[uiCompteur]->SOMinverserArcs();
 }
 
+/******************************************************************************
+surcharge de l'opérateur d'affectation
+*******************************************************************************
+Entrée : un objet du même type
+Necessité : Néant
+Sortie : Une référence sur l'objet en cours qui a été modifié
+Entraine : L'objet en cours est une copie de l'objet en paramètre
+******************************************************************************/
 Cgraph & Cgraph::operator=(Cgraph const & GRAObjet)
 {
 	unsigned int uiCompteur;

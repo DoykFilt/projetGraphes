@@ -3,33 +3,29 @@
 
 #include "Carc.h"
 
+/******************************************************************************
+class Csommet
+*******************************************************************************
+
+	Cette classe permet de simmuler le noeud d'un graphe en contenant les arcs
+	le concernant
+
+	Attributs
+		uiSOMNumSommet : le numéro du sommet
+		uiSOMNbArcEntrant : le nombre d'arc dirigés vers ce sommet
+		uiSOMNbArcSortant : le nombre d'arc partant depuis ce sommet
+		ppARCSOMArcEntrant : la liste des arcs dirigés vers ce sommet
+		ppARCSOMArcSortant : la liste des arcs sortant depuis ce sommet
+
+******************************************************************************/
 class Csommet
 {
 
 	private :
-		/******************************************************************************
-		Attribut numero du sommet de l'objet
-		******************************************************************************/
 		unsigned int uiSOMNumSommet;
-
-		/******************************************************************************
-		Attribut nombre d'arcs entrants de l'objet
-		******************************************************************************/
 		unsigned int uiSOMNbArcEntrant;
-
-		/******************************************************************************
-		Attribut nombre d'arcs sortants de l'objet
-		******************************************************************************/
 		unsigned int uiSOMNbArcSortant;
-
-		/******************************************************************************
-		Attribut contenant les arcs entrants
-		******************************************************************************/
 		Carc ** ppARCSOMArcEntrant;
-
-		/******************************************************************************
-		Attributs contenant les arcs sortants
-		******************************************************************************/
 		Carc ** ppARCSOMArcSortant;
 
 	public : 
@@ -153,9 +149,26 @@ class Csommet
 			Entraine : La bonne liste d'arcs est renvoyée
 		******************************************************************************/
 		Carc ** SOMLireArcs(bool bEntrant);
-
+		
+		/******************************************************************************
+		Méthode d'inversion des arcs
+		*******************************************************************************
+			Entrée : Rien
+			Necessité : Néant.
+			Sortie : Rien
+			Entraine : La liste des arcs sortant a été inversée avec celle des entrant 
+				et leur nombre aussi
+		******************************************************************************/
 		void SOMinverserArcs();
-
+		
+		/******************************************************************************
+		Surcharge de l'opérateur d'affectation
+		*******************************************************************************
+			Entrée : Une référence constante sur un objet de type Csommet
+			Necessité : Néant.
+			Sortie : Rien
+			Entraine : L'objet a été affecté par recopie de l'objet en paramètre
+		******************************************************************************/
 		Csommet & Csommet::operator=(Csommet const & SOMObjet);
 };
 

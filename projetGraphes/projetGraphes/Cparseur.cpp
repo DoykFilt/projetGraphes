@@ -273,6 +273,13 @@ void Cparseur::PARstockerValeur(char * pcBalise, char * pcValeur)
 	if(pcBalise == nullptr || pcValeur == nullptr)
 		throw Cexception(ERREUR_PARAM);
 
+	if(pcValeur == '\0')
+	{
+		pcValeur = (char *)realloc(pcValeur, sizeof(char) * 2);
+		pcValeur[0] = ' ';
+		pcValeur[1] = '\0';
+	}
+
 	for(uiCptr = 0; uiCptr < uiPARNbrBalises; uiCptr++)
 		if(strcmp(pppcPARtabBalisesValeurs[uiCptr][0], pcBalise) == 0)
 			pppcPARtabBalisesValeurs[uiCptr][1] = _strdup(pcValeur);

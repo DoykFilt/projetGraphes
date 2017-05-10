@@ -9,8 +9,8 @@ Constructeur par défaut
 	Sortie : Rien
 	Entraine : L'objet en cours est initialisé.
 ******************************************************************************/
-		Carc::Carc()
-		{}
+Carc::Carc()
+{}
 
 /******************************************************************************
 Constructeur à un attribut
@@ -20,10 +20,10 @@ Constructeur à un attribut
 	Sortie : Rien
 	Entraine : L'objet en cours est initialisé.
 ******************************************************************************/
-		Carc::Carc(unsigned int uiDestination)
-		{
-			uiARCDestination = uiDestination;
-		}
+Carc::Carc(unsigned int uiDestination)
+{
+	uiARCDestination = uiDestination;
+}
 
 /******************************************************************************
 Constructeur de recopie
@@ -33,10 +33,10 @@ Constructeur de recopie
 	Sortie : Rien
 	Entraine : L'objet en cours est initialisé par recopie.
 ******************************************************************************/
-		Carc::Carc(const Carc & ARCObjet)
-		{
-			uiARCDestination = ARCObjet.uiARCDestination;
-		}
+Carc::Carc(const Carc & ARCObjet)
+{
+	uiARCDestination = ARCObjet.uiARCDestination;
+}
 		
 /******************************************************************************
 Destructeur
@@ -46,8 +46,8 @@ Destructeur
 	Sortie : Rien
 	Entraine : L'objet en cours est désalloué.
 ******************************************************************************/
-		Carc::~Carc()
-		{}
+Carc::~Carc()
+{}
 		
 /******************************************************************************
 Méthode de lecture de l'attribut destination
@@ -57,10 +57,10 @@ Méthode de lecture de l'attribut destination
 	Sortie : retourne la destination
 	Entraine : Néant.
 ******************************************************************************/
-		unsigned int Carc::ARCLireDestination()
-		{
-			return uiARCDestination;
-		}
+unsigned int Carc::ARCLireDestination()
+{
+	return uiARCDestination;
+}
 		
 /******************************************************************************
 Méthode de modification de l'attribut destination
@@ -70,8 +70,7 @@ Méthode de modification de l'attribut destination
 	Sortie : Rien
 	Entraine : l'attribut destination est modifié.
 ******************************************************************************/
-		void Carc::ARCModifierDestination(unsigned int uiDestination)
-		{
-			uiARCDestination = uiDestination;
-		}
-
+void Carc::ARCModifierDestination(unsigned int uiDestination)
+{
+	uiARCDestination = uiDestination;
+}

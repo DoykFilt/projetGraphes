@@ -54,10 +54,11 @@ void main(int argc, char * argv[])
 		cout << " " << EXCexception.EXCLire_Message() << endl;
 	}
 
+	GRAgraph->GRAvider();
 	delete GRGgenerateur;
 	delete GRAgraph;
 	delete GRAgraphInverse;
 	delete PARparseur;
 
-	this_thread::sleep_for(chrono::seconds(5));
+	//this_thread::sleep_for(chrono::seconds(5));
 }

@@ -1,6 +1,17 @@
 #ifndef CARC
 #define CARC
 
+/******************************************************************************
+class Carc
+*******************************************************************************
+
+	Cette classe permet simuler un arc reliant deux sommet, contenu dans le 
+	sommet destinataire elle contient le numéro du sommet destinataire
+
+	Attributs
+		uiPARNbrBalises : le sommet vers lequel l'arc pointe
+
+******************************************************************************/
 class Carc 
 {
 private :
@@ -19,54 +30,54 @@ public :
 	******************************************************************************/
 	Carc();
 
-/******************************************************************************
-Constructeur à un attribut
-*******************************************************************************
-Entrée : l'attribut destination
-Necessité : la'ttribut passé en parametre correspond à un sommet
-Sortie : Rien
-Entraine : L'objet en cours est initialisé.
-******************************************************************************/
+	/******************************************************************************
+	Constructeur à un attribut
+	*******************************************************************************
+	Entrée : l'attribut destination
+	Necessité : la'ttribut passé en parametre correspond à un sommet
+	Sortie : Rien
+	Entraine : L'objet en cours est initialisé.
+	******************************************************************************/
 	Carc(unsigned int uiDestination);
 
-/******************************************************************************
-Constructeur de recopie
-*******************************************************************************
-Entrée : Objet Carc
-Necessité : Néant
-Sortie : Rien
-Entraine : L'objet en cours est initialisé par recopie.
-******************************************************************************/
+	/******************************************************************************
+	Constructeur de recopie
+	*******************************************************************************
+	Entrée : Objet Carc
+	Necessité : Néant
+	Sortie : Rien
+	Entraine : L'objet en cours est initialisé par recopie.
+	******************************************************************************/
 	Carc(const Carc & ARCObjet);
 
-/******************************************************************************
-Destructeur
-*******************************************************************************
-Entrée : Rien
-Necessité : Néant
-Sortie : Rien
-Entraine : L'objet en cours est désalloué.
-******************************************************************************/
+	/******************************************************************************
+	Destructeur
+	*******************************************************************************
+	Entrée : Rien
+	Necessité : Néant
+	Sortie : Rien
+	Entraine : L'objet en cours est désalloué.
+	******************************************************************************/
 	~Carc();
 
-/******************************************************************************
-Méthode de lecture de l'attribut destination
-*******************************************************************************
-Entrée : Rien
-Necessité : Néant
-Sortie : retourne la destination
-Entraine : Néant.
-******************************************************************************/
+	/******************************************************************************
+	Méthode de lecture de l'attribut destination
+	*******************************************************************************
+	Entrée : Rien
+	Necessité : Néant
+	Sortie : retourne la destination
+	Entraine : Néant.
+	******************************************************************************/
 	unsigned int ARCLireDestination();
 
-/******************************************************************************
-Méthode de modification de l'attribut destination
-*******************************************************************************
-Entrée : la destination de remplacement
-Necessité : destination corresppndante a un sommet existant
-Sortie : Rien
-Entraine : l'attribut destination est modifié.
-******************************************************************************/
+	/******************************************************************************
+	Méthode de modification de l'attribut destination
+	*******************************************************************************
+	Entrée : la destination de remplacement
+	Necessité : destination corresppndante a un sommet existant
+	Sortie : Rien
+	Entraine : l'attribut destination est modifié.
+	******************************************************************************/
 	void ARCModifierDestination(unsigned int uiDestination);
 	
 };

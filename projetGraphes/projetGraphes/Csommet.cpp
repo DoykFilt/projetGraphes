@@ -302,6 +302,15 @@ Carc ** Csommet::SOMLireArcs(bool bEntrant)
 	else return ppARCSOMArcSortant;
 }
 
+/******************************************************************************
+Méthode d'inversion des arcs
+*******************************************************************************
+	Entrée : Rien
+	Necessité : Néant.
+	Sortie : Rien
+	Entraine : La liste des arcs sortant a été inversée avec celle des entrant 
+		et leur nombre aussi
+******************************************************************************/
 void Csommet::SOMinverserArcs()
 {
 	Carc ** ARCtemp;
@@ -316,6 +325,14 @@ void Csommet::SOMinverserArcs()
 	ppARCSOMArcSortant = ARCtemp;
 }
 
+/******************************************************************************
+Surcharge de l'opérateur d'affectation
+*******************************************************************************
+	Entrée : Une référence constante sur un objet de type Csommet
+	Necessité : Néant.
+	Sortie : Rien
+	Entraine : L'objet a été affecté par recopie de l'objet en paramètre
+******************************************************************************/
 Csommet & Csommet::operator=(Csommet const & SOMObjet)
 {
 	unsigned int uiCompteurArc;
