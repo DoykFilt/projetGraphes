@@ -246,21 +246,26 @@ void Cgraph::GRAafficherGraph()
 {
 	unsigned int uiCompteurSommets, uiCompteurArcs;
 
+	cout << "#########################################################################" << endl;
+	cout << "#---------- Graphe a " << uiGRAnbrSommets << " sommets ----------" << endl << "#" << endl;
+
 	for(uiCompteurSommets = 0; uiCompteurSommets < uiGRAnbrSommets; uiCompteurSommets++)
 	{
-		cout << "Sommet " << ppSOMGRAListSommets[uiCompteurSommets]->SOMLireNumSommet() << ", ";
-		cout << ppSOMGRAListSommets[uiCompteurSommets]->SOMLireNbArcEntrant() << " arcs entrants ";
+		cout << "#---------- SOMMET " << ppSOMGRAListSommets[uiCompteurSommets]->SOMLireNumSommet() << " ---- ";
+		cout << ppSOMGRAListSommets[uiCompteurSommets]->SOMLireNbArcEntrant() << " arcs entrants " << " ---- ";
 		cout << ppSOMGRAListSommets[uiCompteurSommets]->SOMLireNbArcSortant() << " arcs sortants";
-		cout << endl;
+		cout << " ----------" << endl << "#" << endl;
 
-		cout << "Arcs entrants :" << endl;
+		cout << "#--Arcs entrants :" << endl;
 		for(uiCompteurArcs = 0; uiCompteurArcs < ppSOMGRAListSommets[uiCompteurSommets]->SOMLireNbArcEntrant(); uiCompteurArcs++)
-			cout <<  ppSOMGRAListSommets[uiCompteurSommets]->SOMLireArcs(true)[uiCompteurArcs]->ARCLireDestination() << " -> " << endl;
+			cout << "# " << ppSOMGRAListSommets[uiCompteurSommets]->SOMLireArcs(true)[uiCompteurArcs]->ARCLireDestination() << " -> " << endl;
 		
-		cout << "Arcs sortants :" << endl;
+		cout << "#--Arcs sortants :" << endl;
 		for(uiCompteurArcs = 0; uiCompteurArcs < ppSOMGRAListSommets[uiCompteurSommets]->SOMLireNbArcSortant(); uiCompteurArcs++)
-			cout << " -> " << ppSOMGRAListSommets[uiCompteurSommets]->SOMLireArcs(false)[uiCompteurArcs]->ARCLireDestination() << endl;
+			cout << "# -> " << ppSOMGRAListSommets[uiCompteurSommets]->SOMLireArcs(false)[uiCompteurArcs]->ARCLireDestination() << endl;
+		cout << "#" << endl;
 	}
+	cout << "#########################################################################" << endl << endl;
 }
 
 /******************************************************************************

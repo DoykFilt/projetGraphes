@@ -107,9 +107,9 @@ private :
 	PARstockerValeur
 	*******************************************************************************
 	Entrée : (2 chaînes de caractères)pcBalise et pcValeur, la valeur à stocker dans la balise
-	Necessité : Le fichier existe
-	Sortie : Un objet CMatrice de type MType
-	Entraine : la matrice est lue puis retourné
+	Necessité : La balise existe
+	Sortie : Rien
+	Entraine : La valeur a été associée à la bonne balise dans la matrice
 	******************************************************************************/
 	void PARstockerValeur(char * pcBalise, char * pcValeur);
 

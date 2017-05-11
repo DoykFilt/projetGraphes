@@ -9,6 +9,7 @@ using namespace std;
 
 void main(int argc, char * argv[])
 {
+	//Déclarations
 	Cparseur * PARparseur = nullptr;
 	CgraphGenerateur * GRGgenerateur = nullptr;
 	Cgraph * GRAgraph = nullptr;
@@ -17,6 +18,7 @@ void main(int argc, char * argv[])
 	char ** ppcBalises;
 	unsigned int uiNbrBalises;
 
+	//les balises principales à trouver dans le fichier
 	uiNbrBalises = 4;
 	ppcBalises = new char *[uiNbrBalises];
 	ppcBalises[0] = _strdup("SOMMETS");
@@ -24,26 +26,25 @@ void main(int argc, char * argv[])
 	ppcBalises[2] = _strdup("NBSOMMETS");
 	ppcBalises[3] = _strdup("NBARCS");
 
+	//Bloc principal
 	try{
 		
 		//Si il n'y a aucun fichier en paramètre on s'arrête là
 		//if(argc <= 1)
 			//throw(Cexception(0, "Pas de parametres"));
 
-		cout << "Lecture du graphe" << endl;
+		cout << "1 -------------------- Lecture du graphe.." << endl << endl;
 		PARparseur = new Cparseur(ppcBalises, uiNbrBalises);
 		PARparseur->PARLire("graph.txt");
-		cout << "graphe lu" << endl;
 
-		cout << "Creation du graphe" << endl;
+		cout << "2 -------------------- Generation du graphe.." << endl << endl;
 		GRGgenerateur = new CgraphGenerateur(PARparseur);
 		GRAgraph = GRGgenerateur->GRGgenererGraph();
-		cout << "graph cree" << endl;
 
-		cout << "Affichage du graphe" << endl;
+		cout << "3 -------------------- Affichage du graphe.." << endl << endl;
 		GRAgraph->GRAafficherGraph();
 
-		cout << "Inversion du graphe" << endl;
+		cout << "4 -------------------- Inversion du graphe.." << endl << endl;
 		GRAgraphInverse = new Cgraph(*GRAgraph);
 		GRAgraphInverse->GRAinverser();
 		GRAgraphInverse->GRAafficherGraph();
@@ -61,5 +62,5 @@ void main(int argc, char * argv[])
 	delete GRAgraphInverse;
 	delete PARparseur;
 
-	this_thread::sleep_for(chrono::seconds(5));
+	this_thread::sleep_for(chrono::seconds(20));
 }
