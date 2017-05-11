@@ -27,12 +27,12 @@ void main(int argc, char * argv[])
 	try{
 		
 		//Si il n'y a aucun fichier en paramètre on s'arrête là
-		if(argc <= 1)
-			throw(Cexception(0, "Pas de parametres"));
+		//if(argc <= 1)
+			//throw(Cexception(0, "Pas de parametres"));
 
 		cout << "Lecture du graphe" << endl;
 		PARparseur = new Cparseur(ppcBalises, uiNbrBalises);
-		PARparseur->PARLire(argv[1]);
+		PARparseur->PARLire("graph.txt");
 		cout << "graphe lu" << endl;
 
 		cout << "Creation du graphe" << endl;
@@ -54,11 +54,12 @@ void main(int argc, char * argv[])
 		cout << " " << EXCexception.EXCLire_Message() << endl;
 	}
 
-	GRAgraph->GRAvider();
+	if(GRAgraph != nullptr)
+		GRAgraph->GRAvider();
 	delete GRGgenerateur;
 	delete GRAgraph;
 	delete GRAgraphInverse;
 	delete PARparseur;
 
-	//this_thread::sleep_for(chrono::seconds(5));
+	this_thread::sleep_for(chrono::seconds(5));
 }

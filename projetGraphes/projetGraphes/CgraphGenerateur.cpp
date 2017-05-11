@@ -151,6 +151,29 @@ Entraine : L'entier a été reconnu et renvoyé
 ******************************************************************************/
 unsigned int CgraphGenerateur::GRGreconnaitreEntier(char * pcElm)
 {
+	//Version manuelle
+	unsigned int uiCompteur = 0;
+
+	//On test d'abord si on a affaire à un nombre
+	while(pcElm[uiCompteur] == ' ' || pcElm[uiCompteur] == '\n' && pcElm[uiCompteur] != '\0')
+		uiCompteur++;
+	while(pcElm[uiCompteur] != '\0' && pcElm[uiCompteur] != ' ' && pcElm[uiCompteur] != '\n')
+	{
+		if(!isdigit(pcElm[uiCompteur]))
+			throw Cexception(ERREUR_PARSEUR, "Impossible de reconnaitre un entier positif");
+		uiCompteur++;
+	}
+	while(pcElm[uiCompteur] != '\0')
+	{
+		pcElm[uiCompteur] = ' ';
+		uiCompteur++;
+	}
+
+	//puis on le renvoit
+	return strtol(pcElm, NULL, 0);
+
+
+	/*
 	long int liTemp;
 	//on utilise strtol au cas où l'utilisateur aurait rentré un long ou un double au lieu d'un int
 	liTemp = strtol(pcElm, NULL, 0);
@@ -160,7 +183,7 @@ unsigned int CgraphGenerateur::GRGreconnaitreEntier(char * pcElm)
 	if(liTemp < 0)
 		throw Cexception(ERREUR_PARSEUR, "Les parametres doivent etre positifs");
 
-	return (unsigned int)liTemp;
+	return (unsigned int)liTemp;*/
 }
 
 /******************************************************************************
