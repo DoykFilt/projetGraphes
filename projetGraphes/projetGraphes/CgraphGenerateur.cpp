@@ -157,7 +157,7 @@ unsigned int CgraphGenerateur::GRGreconnaitreEntier(char * pcElm)
 	//On test d'abord si on a affaire à un nombre
 	while(pcElm[uiCompteur] == ' ' || pcElm[uiCompteur] == '\n' && pcElm[uiCompteur] != '\0')
 		uiCompteur++;
-	while(pcElm[uiCompteur] != '\0' && pcElm[uiCompteur] != ' ' && pcElm[uiCompteur] != '\n')
+	while(pcElm[uiCompteur] != '\0' && pcElm[uiCompteur] != ' ' && pcElm[uiCompteur] != '\n' && pcElm[uiCompteur] != ',')
 	{
 		if(!isdigit(pcElm[uiCompteur]))
 			throw Cexception(ERREUR_PARSEUR, "Impossible de reconnaitre un entier positif");

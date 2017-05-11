@@ -10,7 +10,9 @@ Constructeur par défaut
 	Entraine : L'objet en cours est initialisé.
 ******************************************************************************/
 Carc::Carc()
-{}
+{
+	uiARCDestination = 0;
+}
 
 /******************************************************************************
 Constructeur à un attribut
